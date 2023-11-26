@@ -1,0 +1,482 @@
+test> use bb2;
+switched to db bb2
+bb2> db.student_info.find()
+Student_info
+bb2> db.Student_info.find()
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    Rollno: 1025,
+    Name: 'Arun',
+    Course: 'FS',
+    m1: 40,
+    m2: 60,
+    m3: 77,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 22,
+      email: 'ar@gmail.com',
+      DOB: ISODate("1999-02-15T00:00:00.000Z")
+    }
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    Rollno: 1026,
+    Name: 'Balaji',
+    Course: 'FS',
+    m1: 50,
+    m2: 66,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'bal@gmail.com',
+      DOB: ISODate("1999-03-25T00:00:00.000Z")
+    }
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db9"),
+    Rollno: 1027,
+    Name: 'Chandru',
+    Course: 'WD',
+    m1: 70,
+    m2: 88,
+    m3: 92,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: {
+      age: 20,
+      email: 'chand@gmail.com',
+      DOB: ISODate("2000-12-01T00:00:00.000Z")
+    }
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    Rollno: 1028,
+    Name: 'Deva',
+    Course: 'FS',
+    m1: 12,
+    m2: 9,
+    m3: 37,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'dev@gmail.com',
+      DOB: ISODate("1999-10-10T00:00:00.000Z")
+    }
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    Rollno: 1029,
+    Name: 'Elango',
+    Course: 'WD',
+    m1: 97,
+    m2: 100,
+    m3: 90,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: {
+      age: 21,
+      email: 'el@gmail.com',
+      DOB: ISODate("2000-09-27T00:00:00.000Z")
+    }
+  }
+]
+Comparision Operator
+-------------------------------------
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1})
+[
+  { Name: 'Arun', m1: 40 },
+  { Name: 'Balaji', m1: 50 },
+  { Name: 'Chandru', m1: 70 },
+  { Name: 'Deva', m1: 12 },}
+  { Name: 'Elango', m1: 97 }
+]
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1}).count()
+5
+
+bb2> db.Student_info.find( {m1:{$gte:40}}, {_id:0,Name:1,m1:1})
+[
+  { Name: 'Arun', m1: 40 },
+  { Name: 'Balaji', m1: 50 },
+  { Name: 'Chandru', m1: 70 },
+  { Name: 'Elango', m1: 97 }
+]
+
+
+bb2> db.Student_info.find( {m2:{$lt:40}}, {_id:0,Name:1,m2:1})
+[ { Name: 'Deva', m2: 9 } ]
+
+
+bb2> db.Student_info.find( {"Personal_details.DOB":{$eq:new Date("2000-09-27")}},
+ {_id:0,Name:1,"Personal_details.DOB":1})
+
+[
+  {
+    Name: 'Elango',
+    Personal_details: { DOB: ISODate("2000-09-27T00:00:00.000Z") }
+  }
+]
+
+
+
+
+bb2> db.Student_info.find( {"Personal_details.DOB":{$gt:new Date("1999-02-01")}}, 
+{_id:0,Name:1,"Personal_details.DOB":1})
+[
+  {
+    Name: 'Arun',
+    Personal_details: { DOB: ISODate("1999-02-15T00:00:00.000Z") }
+  },
+  {
+    Name: 'Balaji',
+    Personal_details: { DOB: ISODate("1999-03-25T00:00:00.000Z") }
+  },
+  {
+    Name: 'Chandru',
+    Personal_details: { DOB: ISODate("2000-12-01T00:00:00.000Z") }
+  },
+  {
+    Name: 'Deva',
+    Personal_details: { DOB: ISODate("1999-10-10T00:00:00.000Z") }
+  },
+  {
+    Name: 'Elango',
+    Personal_details: { DOB: ISODate("2000-09-27T00:00:00.000Z") }
+  }
+]
+
+
+bb2> db.Student_info.find( {"Personal_details.DOB":{$ne:new Date("1999-02-15")}}, 
+{_id:0,Name:1,"Personal_details.DOB":1})
+[
+  {
+    Name: 'Balaji',
+    Personal_details: { DOB: ISODate("1999-03-25T00:00:00.000Z") }
+  },
+  {
+    Name: 'Chandru',
+    Personal_details: { DOB: ISODate("2000-12-01T00:00:00.000Z") }
+  },
+  {
+    Name: 'Deva',
+    Personal_details: { DOB: ISODate("1999-10-10T00:00:00.000Z") }
+  },
+  {
+    Name: 'Elango',
+    Personal_details: { DOB: ISODate("2000-09-27T00:00:00.000Z") }
+  }
+]
+
+in operator
+-------------------
+
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m3:1})
+[
+  { Name: 'Arun', m3: 77 },
+  { Name: 'Balaji', m3: 87 },
+  { Name: 'Chandru', m3: 92 },
+  { Name: 'Deva', m3: 37 },
+  { Name: 'Elango', m3: 90 }
+]
+
+bb2> db.Student_info.find( {m3:{$in:[10,20,30,40,50,60,70,80,90,100]}}, {_id:0,Name:1,m3:1})
+[ { Name: 'Elango', m3: 90 } ]
+
+bb2> db.Student_info.find( {m3:{$in:[10,20,30,40,50,60,70,80,90,100]}}, 
+{_id:0,Name:1,m3:1,"Personal_details.email":1})
+[
+  {
+    Name: 'Elango',
+    m3: 90,
+    Personal_details: { email: 'el@gmail.com' }
+  }
+]
+
+Logical Operator:
+-----------------------------
+
+And:
+--------
+
+db.collection.find({$and: [ {exp1},{exp2},{exp3}]  }, {projection})
+
+bb2> db.Student_info.find({$and: [ {m1:{$gte:40}}, {m2:{$gte:40}}, {m3:{$gte:40}} ]},
+ {_id:0,Name:1,m1:1,m2:1,m3:1})
+
+[
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Elango', m1: 97, m2: 100, m3: 90 }
+]
+
+OR
+------
+bb2> db.Student_info.find({$or: [ {m1:{$lt:40}}, {m2:{$lt:40}}, {m3:{$lt:40}} ]},
+ {_id:0,Name:1,m1:1,m2:1,m3:1})
+
+
+[ { Name: 'Deva', m1: 12, m2: 9, m3: 37 } ] }
+
+
+Nor
+-------
+
+bb2> db.Student_info.find({$nor: [{Name:{$eq:"Deva"}}]}, 
+{_id:0,Name:1,m1:1,m2:1,m3:1})
+
+[
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Elango', m1: 97, m2: 100, m3: 90 }
+]
+
+Limit and Skip
+---------------------------
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1})
+[
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Deva', m1: 12, m2: 9, m3: 37 },
+  { Name: 'Elango', m1: 97, m2: 100, m3: 90 }
+]
+
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).limit(2)
+[
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 }
+]
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).limit(3)
+[
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 }
+]
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).limit(2).skip(1)
+[
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 }
+]
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).limit(2).skip(2)
+[
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Deva', m1: 12, m2: 9, m3: 37 }
+]
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).limit(3).skip(1)
+[
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Deva', m1: 12, m2: 9, m3: 37 }
+]
+
+Sorting
+-----------------
+
+sort() - 1: asc ,-1 :desc
+
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).sort({Name:1})
+[
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Deva', m1: 12, m2: 9, m3: 37 },
+  { Name: 'Elango', m1: 97, m2: 100, m3: 90 }
+]
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,m1:1,m2:1,m3:1}).sort({Name:-1})
+[
+  { Name: 'Elango', m1: 97, m2: 100, m3: 90 },
+  { Name: 'Deva', m1: 12, m2: 9, m3: 37 },
+  { Name: 'Chandru', m1: 70, m2: 88, m3: 92 },
+  { Name: 'Balaji', m1: 50, m2: 66, m3: 87 },
+  { Name: 'Arun', m1: 40, m2: 60, m3: 77 }
+]
+
+
+bb2> db.Student_info.find({}, {_id:0,Name:1,"Personal_details.DOB":1}).sort({"Personal_details.DOB":1}) ;
+[
+  {
+    Name: 'Arun',
+    Personal_details: { DOB: ISODate("1999-02-15T00:00:00.000Z") }
+  },
+  {
+    Name: 'Balaji',
+    Personal_details: { DOB: ISODate("1999-03-25T00:00:00.000Z") }
+  },
+  {
+    Name: 'Deva',
+    Personal_details: { DOB: ISODate("1999-10-10T00:00:00.000Z") }
+  },
+  {
+    Name: 'Elango',
+    Personal_details: { DOB: ISODate("2000-09-27T00:00:00.000Z") }
+  },
+  {
+    Name: 'Chandru',
+    Personal_details: { DOB: ISODate("2000-12-01T00:00:00.000Z") }
+  }
+]
+bb2> db.Student_info.find({}, {_id:0,Name:1,"Personal_details.DOB":1}).sort({"Personal_details.DOB":-1}) ;
+[
+  {
+    Name: 'Chandru',
+    Personal_details: { DOB: ISODate("2000-12-01T00:00:00.000Z") }
+  },
+  {
+    Name: 'Elango',
+    Personal_details: { DOB: ISODate("2000-09-27T00:00:00.000Z") }
+  },
+  {
+    Name: 'Deva',
+    Personal_details: { DOB: ISODate("1999-10-10T00:00:00.000Z") }
+  },
+  {
+    Name: 'Balaji',
+    Personal_details: { DOB: ISODate("1999-03-25T00:00:00.000Z") }
+  },
+  {
+    Name: 'Arun',
+    Personal_details: { DOB: ISODate("1999-02-15T00:00:00.000Z") }
+  }
+]
+
+
+
+Update
+-------------
+
+db.Student_info.updateOne({Rollno:1025}, {$set:{"Personal_details.age":23}})
+
+
+bb2> db.Student_info.updateOne({Rollno:1025},{$set:{"Personal_details.age":23}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+bb2> db.Student_info.findOne({Rollno:1025})
+{
+  _id: ObjectId("655df96ecf3771eb92af9db7"),
+  Rollno: 1025,
+  Name: 'Arun',
+  Course: 'FS',
+  m1: 40,
+  m2: 60,
+  m3: 77,
+  Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+  Personal_details: {
+    age: 23,
+    email: 'ar@gmail.com',
+    DOB: ISODate("1999-02-15T00:00:00.000Z")
+  }
+}
+
+bb2> db.Student_info.updateMany({},{$set:{"college_name":"KGM"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 5,
+  modifiedCount: 5,
+  upsertedCount: 0
+}
+
+
+bb2> db.Student_info.find()
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    Rollno: 1025,
+    Name: 'Arun',
+    Course: 'FS',
+    m1: 40,
+    m2: 60,
+    m3: 77,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 23,
+      email: 'ar@gmail.com',
+      DOB: ISODate("1999-02-15T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    Rollno: 1026,
+    Name: 'Balaji',
+    Course: 'FS',
+    m1: 50,
+    m2: 66,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'bal@gmail.com',
+      DOB: ISODate("1999-03-25T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db9"),
+    Rollno: 1027,
+    Name: 'Chandru',
+    Course: 'WD',
+    m1: 70,
+    m2: 88,
+    m3: 92,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: {
+      age: 20,
+      email: 'chand@gmail.com',
+      DOB: ISODate("2000-12-01T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    Rollno: 1028,
+    Name: 'Deva',
+    Course: 'FS',
+    m1: 12,
+    m2: 9,
+    m3: 37,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'dev@gmail.com',
+      DOB: ISODate("1999-10-10T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    Rollno: 1029,
+    Name: 'Elango',
+    Course: 'WD',
+    m1: 97,
+    m2: 100,
+    m3: 90,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: {
+      age: 21,
+      email: 'el@gmail.com',
+      DOB: ISODate("2000-09-27T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  }
+]
+
+
+
+
+
+

@@ -1,0 +1,486 @@
+mysql> use batch20;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| bike_det          |
+| cust_det          |
+| cust_det3         |
+| depart            |
+| depart1           |
+| departments       |
+| dmo_ntnull        |
+| dmo_null          |
+| dmo_uniq          |
+| doc_det           |
+| emp               |
+| emp1              |
+| emp2              |
+| employees         |
+| feedback          |
+| patient_det       |
+| prod_det          |
+| product_det       |
+| stu_mark          |
+| student_det       |
+| student_info      |
+| students          |
+| table1            |
+| table2            |
++-------------------+
+24 rows in set (1.19 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.24 sec)
+
+mysql> select *, adddate(doj, interval 30 day) as Course_Completion from student_det;
++--------+---------------+--------------+----------------+------------+-------------------+
+| studid | name          | mobilenumber | emailid        | doj        | Course_Completion |
++--------+---------------+--------------+----------------+------------+-------------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 | 2023-08-09        |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 | 2023-09-14        |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 | 2023-08-24        |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 | 2023-12-15        |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 | 2023-11-01        |
++--------+---------------+--------------+----------------+------------+-------------------+
+5 rows in set (0.05 sec)
+
+mysql> select *, adddate(doj, interval 28 week) as Course_Completion from student_det;
++--------+---------------+--------------+----------------+------------+-------------------+
+| studid | name          | mobilenumber | emailid        | doj        | Course_Completion |
++--------+---------------+--------------+----------------+------------+-------------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 | 2024-01-22        |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 | 2024-02-27        |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 | 2024-02-06        |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 | 2024-05-29        |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 | 2024-04-15        |
++--------+---------------+--------------+----------------+------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select *, adddate(doj, interval 3 year) as Course_Completion from student_det;
++--------+---------------+--------------+----------------+------------+-------------------+
+| studid | name          | mobilenumber | emailid        | doj        | Course_Completion |
++--------+---------------+--------------+----------------+------------+-------------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 | 2026-07-10        |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 | 2026-08-15        |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 | 2026-07-25        |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 | 2026-11-15        |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 | 2026-10-02        |
++--------+---------------+--------------+----------------+------------+-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select *, adddate(now(), interval 3 year) as Course_Completion from student_det;
++--------+---------------+--------------+----------------+------------+---------------------+
+| studid | name          | mobilenumber | emailid        | doj        | Course_Completion   |
++--------+---------------+--------------+----------------+------------+---------------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 | 2026-11-18 17:45:29 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 | 2026-11-18 17:45:29 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 | 2026-11-18 17:45:29 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 | 2026-11-18 17:45:29 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 | 2026-11-18 17:45:29 |
++--------+---------------+--------------+----------------+------------+---------------------+
+5 rows in set (0.03 sec)
+
+mysql> select addtime('17:30:40','10:48:30');
++--------------------------------+
+| addtime('17:30:40','10:48:30') |
++--------------------------------+
+| 28:19:10                       |
++--------------------------------+
+1 row in set (0.04 sec)
+
+mysql> select *, convert_tz(doj,'+05:30','-05:00') as Course_Completion from student_det;
++--------+---------------+--------------+----------------+------------+---------------------+
+| studid | name          | mobilenumber | emailid        | doj        | Course_Completion   |
++--------+---------------+--------------+----------------+------------+---------------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 | 2023-07-09 13:30:00 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 | 2023-08-14 13:30:00 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 | 2023-07-24 13:30:00 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 | 2023-11-14 13:30:00 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 | 2023-10-01 13:30:00 |
++--------+---------------+--------------+----------------+------------+---------------------+
+5 rows in set (0.09 sec)
+
+mysql> select  convert_tz(now(),'+05:30','-05:00');
++-------------------------------------+
+| convert_tz(now(),'+05:30','-05:00') |
++-------------------------------------+
+| 2023-11-18 07:25:20                 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select  convert_tz(now(),'+05:30','+08:00');
++-------------------------------------+
+| convert_tz(now(),'+05:30','+08:00') |
++-------------------------------------+
+| 2023-11-18 20:26:05                 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select  convert_tz(now(),'+05:30','+07:00');
++-------------------------------------+
+| convert_tz(now(),'+05:30','+07:00') |
++-------------------------------------+
+| 2023-11-18 19:26:37                 |
++-------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select datediff('2022-12-11','2024-12-11');
++-------------------------------------+
+| datediff('2022-12-11','2024-12-11') |
++-------------------------------------+
+|                                -731 |
++-------------------------------------+
+1 row in set (0.06 sec)
+
+mysql> select day('2002-12-11');
++-------------------+
+| day('2002-12-11') |
++-------------------+
+|                11 |
++-------------------+
+1 row in set (0.03 sec)
+
+mysql> select date_format(now(),'%Y-%m-%d  %H-%i-%S   %W') as Formatted_Date;
++---------------------------------+
+| Formatted_Date                  |
++---------------------------------+
+| 2023-11-18  18-06-51   Saturday |
++---------------------------------+
+1 row in set (0.09 sec)
+
+mysql> select date_format(now(),'%d-%m-%Y  %H-%i-%S   %W') as Formatted_Date;
++---------------------------------+
+| Formatted_Date                  |
++---------------------------------+
+| 18-11-2023  18-07-13   Saturday |
++---------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(now(),'%d-%m-%Y  %H:%i:%S   %W') as Formatted_Date;
++---------------------------------+
+| Formatted_Date                  |
++---------------------------------+
+| 18-11-2023  18:07:29   Saturday |
++---------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_format(now(),'%d-%m-%Y  %H:%i:%S   %W %p') as Formatted_Date;
++------------------------------------+
+| Formatted_Date                     |
++------------------------------------+
+| 18-11-2023  18:07:57   Saturday PM |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_sub(now(), interval 5 day) as Day_Ago;
++---------------------+
+| Day_Ago             |
++---------------------+
+| 2023-11-13 18:09:27 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_sub(now(), interval 15 week) as Day_Ago;
++---------------------+
+| Day_Ago             |
++---------------------+
+| 2023-08-05 18:09:42 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select date_sub(now(), interval 5 year) as 5_years_Ago;
++---------------------+
+| 5_years_Ago         |
++---------------------+
+| 2018-11-18 18:10:03 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select concat('Batch20','MySQL','-','Milestone on 24/11/23') as Milestone;
++------------------------------------+
+| Milestone                          |
++------------------------------------+
+| Batch20MySQL-Milestone on 24/11/23 |
++------------------------------------+
+1 row in set (0.16 sec)
+
+mysql> select length('Software') as Length, char_length('Software') as character_length;
++--------+------------------+
+| Length | character_length |
++--------+------------------+
+|      8 |                8 |
++--------+------------------+
+1 row in set (0.06 sec)
+
+mysql> select upper('Software') as UCase, lower('SOFTWATE') as lcase;
++----------+----------+
+| UCase    | lcase    |
++----------+----------+
+| SOFTWARE | softwate |
++----------+----------+
+1 row in set (0.03 sec)
+
+mysql> select substring('meiarasu',4,8) as Name;
++-------+
+| Name  |
++-------+
+| arasu |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select substring('meiarasu as mouli',4,17) as Name;
++----------------+
+| Name           |
++----------------+
+| arasu as mouli |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select substring('meiarasu as mouli',4,20) as Name;
++----------------+
+| Name           |
++----------------+
+| arasu as mouli |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select substring('meiarasu as mouli',4,200) as Name;
++----------------+
+| Name           |
++----------------+
+| arasu as mouli |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select substring('meiarasu as mouli',400,200) as Name;
++------+
+| Name |
++------+
+|      |
++------+
+1 row in set (0.00 sec)
+
+mysql> select left('ashok',2) , right('ashok',2) as Studentname;
++-----------------+-------------+
+| left('ashok',2) | Studentname |
++-----------------+-------------+
+| as              | ok          |
++-----------------+-------------+
+1 row in set (0.04 sec)
+
+mysql> select trim('  Mouli  ') as trimmed_string;
++----------------+
+| trimmed_string |
++----------------+
+| Mouli          |
++----------------+
+1 row in set (0.03 sec)
+
+mysql> select replace('Samuel','S','D') as Replaceable_String;
++--------------------+
+| Replaceable_String |
++--------------------+
+| Damuel             |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select replace('jack sparrow','jack','jeeva') as Replaceable_String;
++--------------------+
+| Replaceable_String |
++--------------------+
+| jeeva sparrow      |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select convert('178',SIGNED) as convert_value, cast('78.956' as decimal(5,2));
++---------------+--------------------------------+
+| convert_value | cast('78.956' as decimal(5,2)) |
++---------------+--------------------------------+
+|           178 |                          78.96 |
++---------------+--------------------------------+
+1 row in set (0.04 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select cast(doj as decimal(10,2)) as convert_Decimal from student_det where studid=3;
++-----------------+
+| convert_Decimal |
++-----------------+
+|     20230725.00 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select concat_ws('*','My','Ambition','is','pilot');
++---------------------------------------------+
+| concat_ws('*','My','Ambition','is','pilot') |
++---------------------------------------------+
+| My*Ambition*is*pilot                        |
++---------------------------------------------+
+1 row in set (0.05 sec)
+
+mysql> select format(87500.9856,3);
++----------------------+
+| format(87500.9856,3) |
++----------------------+
+| 87,500.986           |
++----------------------+
+1 row in set (0.04 sec)
+
+mysql> select format(87500.9854,3);
++----------------------+
+| format(87500.9854,3) |
++----------------------+
+| 87,500.985           |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select format(87500.9854,2);
++----------------------+
+| format(87500.9854,2) |
++----------------------+
+| 87,500.99            |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select format(87500.9814,2);
++----------------------+
+| format(87500.9814,2) |
++----------------------+
+| 87,500.98            |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select format(87500.9814,1);
++----------------------+
+| format(87500.9814,1) |
++----------------------+
+| 87,501.0             |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> select abs(-12568);
++-------------+
+| abs(-12568) |
++-------------+
+|       12568 |
++-------------+
+1 row in set (0.08 sec)
+
+mysql> select round(75.56,1);
++----------------+
+| round(75.56,1) |
++----------------+
+|           75.6 |
++----------------+
+1 row in set (0.05 sec)
+
+mysql> select round(75.1235,3);
++------------------+
+| round(75.1235,3) |
++------------------+
+|           75.124 |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(46.4);
++------------+
+| ceil(46.4) |
++------------+
+|         47 |
++------------+
+1 row in set (0.03 sec)
+
+mysql> select floor(46.4);
++-------------+
+| floor(46.4) |
++-------------+
+|          46 |
++-------------+
+1 row in set (0.03 sec)
+
+mysql> select rand() * 60;
++--------------------+
+| rand() * 60        |
++--------------------+
+| 29.739285735170622 |
++--------------------+
+1 row in set (0.10 sec)
+
+mysql> select ceil(rand() * 95) as OTP;
++-----+
+| OTP |
++-----+
+|  51 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select ceil(rand() * 9500) as OTP;
++------+
+| OTP  |
++------+
+| 1608 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(rand() * 9500) as OTP;
++------+
+| OTP  |
++------+
+| 2399 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select ceil(rand() * 9500) as OTP;
++------+
+| OTP  |
++------+
+| 7170 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select round(75.54);
++--------------+
+| round(75.54) |
++--------------+
+|           76 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select round(75.46);
++--------------+
+| round(75.46) |
++--------------+
+|           75 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select round(75.458);
++---------------+
+| round(75.458) |
++---------------+
+|            75 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> Terminal close -- exit!

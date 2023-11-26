@@ -1,0 +1,325 @@
+mysql> create database batch20
+    -> ;
+Query OK, 1 row affected (2.10 sec)
+
+mysql> use batch20;
+Database changed
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| batch17            |
+| batch20            |
+| blrdb              |
+| bookdb             |
+| cbebatch17         |
+| chnbatch2          |
+| demo_blr           |
+| demo_thrissurdb    |
+| demochennai        |
+| emp_det            |
+| employee           |
+| information_schema |
+| kgm                |
+| login_page         |
+| login_page1        |
+| mysql              |
+| performance_schema |
+| productdb          |
+| sakila             |
+| student_db         |
+| student_det        |
+| student_management |
+| sys                |
+| testdb             |
+| thrissurdb         |
+| ticket             |
+| user_manage        |
+| user_management    |
+| usermanage         |
+| workbench          |
+| world              |
++--------------------+
+34 rows in set (1.08 sec)
+
+mysql> use batch20;
+Database changed
+mysql> show tables;
+Empty set (0.26 sec)
+
+mysql> create table student_det(studid int,name varchar(20),mobilenumber int,emailid varchar(30),doj date);
+Query OK, 0 rows affected (1.60 sec)
+
+mysql> desc student_det;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| studid       | int         | YES  |     | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| mobilenumber | int         | YES  |     | NULL    |       |
+| emailid      | varchar(30) | YES  |     | NULL    |       |
+| doj          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.16 sec)
+
+mysql> alter table student_det add sno int first;
+Query OK, 0 rows affected (0.26 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_det;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| sno          | int         | YES  |     | NULL    |       |
+| studid       | int         | YES  |     | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| mobilenumber | int         | YES  |     | NULL    |       |
+| emailid      | varchar(30) | YES  |     | NULL    |       |
+| doj          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> alter table student_det add dob date after name;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_det;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| sno          | int         | YES  |     | NULL    |       |
+| studid       | int         | YES  |     | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| dob          | date        | YES  |     | NULL    |       |
+| mobilenumber | int         | YES  |     | NULL    |       |
+| emailid      | varchar(30) | YES  |     | NULL    |       |
+| doj          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> alter table student_det add address text(30);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_det;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| sno          | int         | YES  |     | NULL    |       |
+| studid       | int         | YES  |     | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| dob          | date        | YES  |     | NULL    |       |
+| mobilenumber | int         | YES  |     | NULL    |       |
+| emailid      | varchar(30) | YES  |     | NULL    |       |
+| doj          | date        | YES  |     | NULL    |       |
+| address      | tinytext    | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student_det change mobilenumber mnumber bigint;
+Query OK, 0 rows affected (3.55 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_det;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sno     | int         | YES  |     | NULL    |       |
+| studid  | int         | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| mnumber | bigint      | YES  |     | NULL    |       |
+| emailid | varchar(30) | YES  |     | NULL    |       |
+| doj     | date        | YES  |     | NULL    |       |
+| address | tinytext    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student_det modify name char(20);
+Query OK, 0 rows affected (0.27 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_det;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sno     | int         | YES  |     | NULL    |       |
+| studid  | int         | YES  |     | NULL    |       |
+| name    | char(20)    | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| mnumber | bigint      | YES  |     | NULL    |       |
+| emailid | varchar(30) | YES  |     | NULL    |       |
+| doj     | date        | YES  |     | NULL    |       |
+| address | tinytext    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student_det modify name char(22);
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_det;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sno     | int         | YES  |     | NULL    |       |
+| studid  | int         | YES  |     | NULL    |       |
+| name    | char(22)    | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| mnumber | bigint      | YES  |     | NULL    |       |
+| emailid | varchar(30) | YES  |     | NULL    |       |
+| doj     | date        | YES  |     | NULL    |       |
+| address | tinytext    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student_det rename student_info;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> desc student_det;
+ERROR 1146 (42S02): Table 'batch20.student_det' doesn't exist
+mysql> desc student_info;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sno     | int         | YES  |     | NULL    |       |
+| studid  | int         | YES  |     | NULL    |       |
+| name    | char(22)    | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| mnumber | bigint      | YES  |     | NULL    |       |
+| emailid | varchar(30) | YES  |     | NULL    |       |
+| doj     | date        | YES  |     | NULL    |       |
+| address | tinytext    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> alter table student_info DROP COLUMN dob;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc student_info;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| sno     | int         | YES  |     | NULL    |       |
+| studid  | int         | YES  |     | NULL    |       |
+| name    | char(22)    | YES  |     | NULL    |       |
+| mnumber | bigint      | YES  |     | NULL    |       |
+| emailid | varchar(30) | YES  |     | NULL    |       |
+| doj     | date        | YES  |     | NULL    |       |
+| address | tinytext    | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| student_info      |
++-------------------+
+1 row in set (0.05 sec)
+
+mysql> drop table student_info;
+Query OK, 0 rows affected (0.10 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| batch17            |
+| batch20            |
+| blrdb              |
+| bookdb             |
+| cbebatch17         |
+| chnbatch2          |
+| demo_blr           |
+| demo_thrissurdb    |
+| demochennai        |
+| emp_det            |
+| employee           |
+| information_schema |
+| kgm                |
+| login_page         |
+| login_page1        |
+| mysql              |
+| performance_schema |
+| productdb          |
+| sakila             |
+| student_db         |
+| student_det        |
+| student_management |
+| sys                |
+| testdb             |
+| thrissurdb         |
+| ticket             |
+| user_manage        |
+| user_management    |
+| usermanage         |
+| workbench          |
+| world              |
++--------------------+
+34 rows in set (0.00 sec)
+
+mysql> drop database batch20;
+Query OK, 0 rows affected (0.37 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| batch17            |
+| blrdb              |
+| bookdb             |
+| cbebatch17         |
+| chnbatch2          |
+| demo_blr           |
+| demo_thrissurdb    |
+| demochennai        |
+| emp_det            |
+| employee           |
+| information_schema |
+| kgm                |
+| login_page         |
+| login_page1        |
+| mysql              |
+| performance_schema |
+| productdb          |
+| sakila             |
+| student_db         |
+| student_det        |
+| student_management |
+| sys                |
+| testdb             |
+| thrissurdb         |
+| ticket             |
+| user_manage        |
+| user_management    |
+| usermanage         |
+| workbench          |
+| world              |
++--------------------+
+33 rows in set (0.00 sec)
+
+mysql> create database batch20;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> create table student_det(studid int,name varchar(20),mobilenumber int,emailid varchar(30),doj date);
+ERROR 1046 (3D000): No database selected
+mysql> use batch20;
+Database changed
+mysql> create table student_det(studid int,name varchar(20),mobilenumber int,emailid varchar(30),doj date);
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> Terminal close -- exit!

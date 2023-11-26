@@ -1,0 +1,251 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| batch17            |
+| batch20            |
+| blrdb              |
+| bookdb             |
+| cbebatch17         |
+| chnbatch2          |
+| demo_blr           |
+| demo_thrissurdb    |
+| demochennai        |
+| emp_det            |
+| employee           |
+| information_schema |
+| kgm                |
+| login_page         |
+| login_page1        |
+| mysql              |
+| performance_schema |
+| productdb          |
+| sakila             |
+| student_db         |
+| student_det        |
+| student_management |
+| sys                |
+| testdb             |
+| thrissurdb         |
+| ticket             |
+| user_manage        |
+| user_management    |
+| userdb             |
+| usermanage         |
+| workbench          |
+| world              |
++--------------------+
+35 rows in set (0.04 sec)
+
+mysql> use batch20;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| student_det       |
++-------------------+
+1 row in set (0.65 sec)
+
+mysql> desc student_det;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| studid       | int         | YES  |     | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| mobilenumber | int         | YES  |     | NULL    |       |
+| emailid      | varchar(30) | YES  |     | NULL    |       |
+| doj          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (1.09 sec)
+
+mysql> insert into student_det(studid,name,mobilenumber,emailid,doj)values(101,'Santhosh',4661161130,'santhosh@gmail.com','2023-11-02');
+ERROR 1264 (22003): Out of range value for column 'mobilenumber' at row 1
+mysql> insert into student_det(studid,name,mobilenumber,emailid,doj)values(101,'Santhosh',466116,'santhosh@gmail.com','2023-11-02');
+Query OK, 1 row affected (0.30 sec)
+
+mysql> insert into student_det values(102,'Rajesh',466117,'raj@gmail.com','2023-11-03');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into student_det values(103,'Meiarasu',225120,'mei25@gmail.com','2023-10-30'),(105,'Jeeva',200563,'jeeva@yahoo.com','2023-11-10'),(120,'Ashif',244569,'ashif@gmail.com','2023-10-22');
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_det;
++--------+----------+--------------+--------------------+------------+
+| studid | name     | mobilenumber | emailid            | doj        |
++--------+----------+--------------+--------------------+------------+
+|    101 | Santhosh |       466116 | santhosh@gmail.com | 2023-11-02 |
+|    102 | Rajesh   |       466117 | raj@gmail.com      | 2023-11-03 |
+|    103 | Meiarasu |       225120 | mei25@gmail.com    | 2023-10-30 |
+|    105 | Jeeva    |       200563 | jeeva@yahoo.com    | 2023-11-10 |
+|    120 | Ashif    |       244569 | ashif@gmail.com    | 2023-10-22 |
++--------+----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name,mobilenumber from student_det;
++----------+--------------+
+| name     | mobilenumber |
++----------+--------------+
+| Santhosh |       466116 |
+| Rajesh   |       466117 |
+| Meiarasu |       225120 |
+| Jeeva    |       200563 |
+| Ashif    |       244569 |
++----------+--------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student_det where name ='rajesh';
++--------+--------+--------------+---------------+------------+
+| studid | name   | mobilenumber | emailid       | doj        |
++--------+--------+--------------+---------------+------------+
+|    102 | Rajesh |       466117 | raj@gmail.com | 2023-11-03 |
++--------+--------+--------------+---------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student_det where doj = '2023-11-02';
++--------+----------+--------------+--------------------+------------+
+| studid | name     | mobilenumber | emailid            | doj        |
++--------+----------+--------------+--------------------+------------+
+|    101 | Santhosh |       466116 | santhosh@gmail.com | 2023-11-02 |
++--------+----------+--------------+--------------------+------------+
+1 row in set (0.04 sec)
+
+mysql> select name from student_det where doj = '2023-11-02';
++----------+
+| name     |
++----------+
+| Santhosh |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+--------------------+------------+
+| studid | name     | mobilenumber | emailid            | doj        |
++--------+----------+--------------+--------------------+------------+
+|    101 | Santhosh |       466116 | santhosh@gmail.com | 2023-11-02 |
+|    102 | Rajesh   |       466117 | raj@gmail.com      | 2023-11-03 |
+|    103 | Meiarasu |       225120 | mei25@gmail.com    | 2023-10-30 |
+|    105 | Jeeva    |       200563 | jeeva@yahoo.com    | 2023-11-10 |
+|    120 | Ashif    |       244569 | ashif@gmail.com    | 2023-10-22 |
++--------+----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_det set doj = adddate(doj,interval 2 day);
+Query OK, 5 rows affected (0.10 sec)
+Rows matched: 5  Changed: 5  Warnings: 0
+
+mysql> select * from student_det;
++--------+----------+--------------+--------------------+------------+
+| studid | name     | mobilenumber | emailid            | doj        |
++--------+----------+--------------+--------------------+------------+
+|    101 | Santhosh |       466116 | santhosh@gmail.com | 2023-11-04 |
+|    102 | Rajesh   |       466117 | raj@gmail.com      | 2023-11-05 |
+|    103 | Meiarasu |       225120 | mei25@gmail.com    | 2023-11-01 |
+|    105 | Jeeva    |       200563 | jeeva@yahoo.com    | 2023-11-12 |
+|    120 | Ashif    |       244569 | ashif@gmail.com    | 2023-10-24 |
++--------+----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_det set name='maniarasu' where studid = 103;
+Query OK, 1 row affected (0.06 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_det;
++--------+-----------+--------------+--------------------+------------+
+| studid | name      | mobilenumber | emailid            | doj        |
++--------+-----------+--------------+--------------------+------------+
+|    101 | Santhosh  |       466116 | santhosh@gmail.com | 2023-11-04 |
+|    102 | Rajesh    |       466117 | raj@gmail.com      | 2023-11-05 |
+|    103 | maniarasu |       225120 | mei25@gmail.com    | 2023-11-01 |
+|    105 | Jeeva     |       200563 | jeeva@yahoo.com    | 2023-11-12 |
+|    120 | Ashif     |       244569 | ashif@gmail.com    | 2023-10-24 |
++--------+-----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_det set mobilenumber=525589,emailid='jeeva125@gmail.com' where name='jeeva';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_det;
++--------+-----------+--------------+--------------------+------------+
+| studid | name      | mobilenumber | emailid            | doj        |
++--------+-----------+--------------+--------------------+------------+
+|    101 | Santhosh  |       466116 | santhosh@gmail.com | 2023-11-04 |
+|    102 | Rajesh    |       466117 | raj@gmail.com      | 2023-11-05 |
+|    103 | maniarasu |       225120 | mei25@gmail.com    | 2023-11-01 |
+|    105 | Jeeva     |       525589 | jeeva125@gmail.com | 2023-11-12 |
+|    120 | Ashif     |       244569 | ashif@gmail.com    | 2023-10-24 |
++--------+-----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_det set doj='2023-11-15' where studid=101;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_det;
++--------+-----------+--------------+--------------------+------------+
+| studid | name      | mobilenumber | emailid            | doj        |
++--------+-----------+--------------+--------------------+------------+
+|    101 | Santhosh  |       466116 | santhosh@gmail.com | 2023-11-15 |
+|    102 | Rajesh    |       466117 | raj@gmail.com      | 2023-11-05 |
+|    103 | maniarasu |       225120 | mei25@gmail.com    | 2023-11-01 |
+|    105 | Jeeva     |       525589 | jeeva125@gmail.com | 2023-11-12 |
+|    120 | Ashif     |       244569 | ashif@gmail.com    | 2023-10-24 |
++--------+-----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> delete from student_det where studid = 120;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student_det;
++--------+-----------+--------------+--------------------+------------+
+| studid | name      | mobilenumber | emailid            | doj        |
++--------+-----------+--------------+--------------------+------------+
+|    101 | Santhosh  |       466116 | santhosh@gmail.com | 2023-11-15 |
+|    102 | Rajesh    |       466117 | raj@gmail.com      | 2023-11-05 |
+|    103 | maniarasu |       225120 | mei25@gmail.com    | 2023-11-01 |
+|    105 | Jeeva     |       525589 | jeeva125@gmail.com | 2023-11-12 |
++--------+-----------+--------------+--------------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from stud_det;
+ERROR 1146 (42S02): Table 'batch20.stud_det' doesn't exist
+mysql> delete from student_det;
+Query OK, 4 rows affected (0.03 sec)
+
+mysql> select * from student_det;
+Empty set (0.00 sec)
+
+mysql> insert into student_det(studid,name,mobilenumber,emailid,doj)values(101,'Santhosh',466116,'santhosh@gmail.com','2023-11-02');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into student_det values(102,'Rajesh',466117,'raj@gmail.com','2023-11-03');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student_det values(103,'Meiarasu',225120,'mei25@gmail.com','2023-10-30'),(105,'Jeeva',200563,'jeeva@yahoo.com','2023-11-10'),(120,'Ashif',244569,'ashif@gmail.com','2023-10-22');
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_det;
++--------+----------+--------------+--------------------+------------+
+| studid | name     | mobilenumber | emailid            | doj        |
++--------+----------+--------------+--------------------+------------+
+|    101 | Santhosh |       466116 | santhosh@gmail.com | 2023-11-02 |
+|    102 | Rajesh   |       466117 | raj@gmail.com      | 2023-11-03 |
+|    103 | Meiarasu |       225120 | mei25@gmail.com    | 2023-10-30 |
+|    105 | Jeeva    |       200563 | jeeva@yahoo.com    | 2023-11-10 |
+|    120 | Ashif    |       244569 | ashif@gmail.com    | 2023-10-22 |
++--------+----------+--------------+--------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> truncate table student_det;
+Query OK, 0 rows affected (1.75 sec)
+
+mysql> select * from student_det;
+Empty set (0.06 sec)
+
+mysql> Terminal close -- exit!

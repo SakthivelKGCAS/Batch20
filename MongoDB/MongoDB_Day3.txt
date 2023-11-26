@@ -1,0 +1,658 @@
+Day 3:24/11/2023
+
+Update methods
+-------------------
+bb2> db.createCollection("Emp_det");
+
+bb2> db.Emp_det.find().pretty()
+[
+  {
+    _id: ObjectId("65607e14afbf47d442295dec"),
+    empno: 1023,
+    empname: 'Mejo',
+    gender: 'Male',
+    salary: 25000.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607e14afbf47d442295ded"),
+    empno: 166,
+    empname: 'Jeeva',
+    gender: 'Male',
+    salary: 45000,
+    department: { dname: 'HR' }
+  },
+  {
+    _id: ObjectId("65607e14afbf47d442295dee"),
+    empno: 502,
+    empname: 'Harini',
+    gender: 'Female',
+    salary: 18550,
+    department: { dname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295def"),
+    empno: 1024,
+    empname: 'Sandy',
+    gender: 'Male',
+    salary: 26600.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295df0"),
+    empno: 167,
+    empname: 'Tamanna',
+    gender: 'Female',
+    salary: 47000,
+    department: { dname: 'HR' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295df1"),
+    empno: 503,
+    empname: 'Samantha',
+    gender: 'Female',
+    salary: 12550,
+    department: { dname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df2"),
+    empno: 1025,
+    empname: 'John',
+    gender: 'Male',
+    salary: 33500.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df3"),
+    empno: 10258,
+    empname: 'Allen',
+    gender: 'Male',
+    salary: 32000,
+    department: { dname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df4"),
+    empno: 504,
+    empname: 'Karthika',
+    gender: 'Female',
+    salary: 13550,
+    department: { dname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607efaafbf47d442295df5"),
+    empno: 1026,
+    empname: 'Harish',
+    gender: 'Male',
+    salary: 23500.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607efaafbf47d442295df6"),
+    empno: 10259,
+    empname: 'Mani',
+    gender: 'Male',
+    salary: 22000,
+    department: { dname: 'Sales' }
+  }
+]
+
+
+set
+------
+bb2> db.Emp_det.updateOne({empno:10259},{$set:{empname:"Manikandan"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bb2> db.Emp_det.find({empno:10259}).pretty()
+[
+  {
+    _id: ObjectId("65607efaafbf47d442295df6"),
+    empno: 10259,
+    empname: 'Manikandan',
+    gender: 'Male',
+    salary: 22000,
+    department: { dname: 'Sales' }
+  }
+]
+
+inc
+--------
+
+bb2> db.Emp_det.updateMany({"department.dname":"Sales"},{$inc:{salary:2000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 6,
+  modifiedCount: 6,
+  upsertedCount: 0
+}
+
+
+bb2> db.Emp_det.find({"department.dname":"Sales"},
+{_id:0,empname:1,"department.dname":1,"salary":1}).pretty()
+[
+  { empname: 'Mejo', salary: 27000.5, department: { dname: 'Sales' } },
+  { empname: 'Sandy', salary: 28600.5, department: { dname: 'Sales' } },
+  { empname: 'John', salary: 35500.5, department: { dname: 'Sales' } },
+  { empname: 'Allen', salary: 34000, department: { dname: 'Sales' } },
+  {
+    empname: 'Harish',
+    salary: 25500.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    empname: 'Manikandan',
+    salary: 24000,
+    department: { dname: 'Sales' }
+  }
+]
+
+
+min
+------
+
+bb2> db.Emp_det.updateOne({empname:"Allen"},{$min:{salary:23000.000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+bb2> db.Emp_det.find({"department.dname":"Sales"},{_id:0,empname:1,"department.dname":1,"salary":1}).pretty()
+[
+  { empname: 'Mejo', salary: 27000.5, department: { dname: 'Sales' } },
+  { empname: 'Sandy', salary: 28600.5, department: { dname: 'Sales' } },
+  { empname: 'John', salary: 35500.5, department: { dname: 'Sales' } },
+  { empname: 'Allen', salary: 23000, department: { dname: 'Sales' } },
+  {
+    empname: 'Harish',
+    salary: 25500.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    empname: 'Manikandan',
+    salary: 24000,
+    department: { dname: 'Sales' }
+  }
+]
+
+
+Max
+-----------
+
+bb2> db.Emp_det.updateOne({empname:"Sandy"},{$max:{salary:36000.000}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+bb2> db.Emp_det.find({"department.dname":"Sales"},
+{_id:0,empname:1,"department.dname":1,"salary":1}).pretty()
+[
+  { empname: 'Mejo', salary: 27000.5, department: { dname: 'Sales' } },
+  { empname: 'Sandy', salary: 36000, department: { dname: 'Sales' } },
+  { empname: 'John', salary: 35500.5, department: { dname: 'Sales' } },
+  { empname: 'Allen', salary: 23000, department: { dname: 'Sales' } },
+  {
+    empname: 'Harish',
+    salary: 25500.5,
+    department: { dname: 'Sales' }
+  },
+  {
+    empname: 'Manikandan',
+    salary: 24000,
+    department: { dname: 'Sales' }
+  }
+]
+
+Mul:
+---------
+bb2> db.Emp_det.updateOne({empno:166},{$mul:{salary:4}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bb2> db.Emp_det.find({empno:166},{_id:0}).pretty()
+[
+  {
+    empno: 166,
+    empname: 'Jeeva',
+    gender: 'Male',
+    salary: 180000,
+    department: { dname: 'HR' }
+  }
+]
+
+unset
+----------
+bb2> db.Emp_det.updateOne({empname:"John"},{$unset:{gender:"Male"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+
+bb2> db.Emp_det.find({"empname":"John"})
+[
+  {
+    _id: ObjectId("65607eceafbf47d442295df2"),
+    empno: 1025,
+    empname: 'John',
+    salary: 35500.5,
+    department: { dname: 'Sales' }
+  }
+]
+
+
+set:
+--------
+bb2> db.Emp_det.updateOne({empname:"John"},{$set:{gender:"Male"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bb2> db.Emp_det.find({"empname":"John"})
+[
+  {
+    _id: ObjectId("65607eceafbf47d442295df2"),
+    empno: 1025,
+    empname: 'John',
+    salary: 35500.5,
+    department: { dname: 'Sales' },
+    gender: 'Male'
+  }
+]
+
+rename
+--------------
+
+bb2> db.Emp_det.updateMany({},{$rename:{"department.dname":"department.deptname"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 11,
+  modifiedCount: 11,
+  upsertedCount: 0
+}
+
+
+bb2> db.Emp_det.find()
+[
+  {
+    _id: ObjectId("65607e14afbf47d442295dec"),
+    empno: 1023,
+    empname: 'Mejo',
+    gender: 'Male',
+    salary: 27000.5,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607e14afbf47d442295ded"),
+    empno: 166,
+    empname: 'Jeeva',
+    gender: 'Male',
+    salary: 180000,
+    department: { deptname: 'HR' }
+  },
+  {
+    _id: ObjectId("65607e14afbf47d442295dee"),
+    empno: 502,
+    empname: 'Harini',
+    gender: 'Female',
+    salary: 18550,
+    department: { deptname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295def"),
+    empno: 1024,
+    empname: 'Sandy',
+    gender: 'Male',
+    salary: 36000,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295df0"),
+    empno: 167,
+    empname: 'Tamanna',
+    gender: 'Female',
+    salary: 47000,
+    department: { deptname: 'HR' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295df1"),
+    empno: 503,
+    empname: 'Samantha',
+    gender: 'Female',
+    salary: 12550,
+    department: { deptname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df2"),
+    empno: 1025,
+    empname: 'John',
+    salary: 35500.5,
+    department: { deptname: 'Sales' },
+    gender: 'Male'
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df3"),
+    empno: 10258,
+    empname: 'Allen',
+    gender: 'Male',
+    salary: 23000,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df4"),
+    empno: 504,
+    empname: 'Karthika',
+    gender: 'Female',
+    salary: 13550,
+    department: { deptname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607efaafbf47d442295df5"),
+    empno: 1026,
+    empname: 'Harish',
+    gender: 'Male',
+    salary: 25500.5,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607efaafbf47d442295df6"),
+    empno: 10259,
+    empname: 'Manikandan',
+    gender: 'Male',
+    salary: 24000,
+    department: { deptname: 'Sales' }
+  }
+]
+
+renameCollection()
+---------------------------
+
+bb2> db.Emp_det.renameCollection("EmployeeDetails");
+{ ok: 1 }
+
+Aggregate Functions
+-----------------------------
+
+group
+--------
+
+bb2> db.EmployeeDetails.aggregate([ {$group: {_id:"$department.deptname"}} ])
+
+
+[ { _id: 'Sales' }, { _id: 'HR' }, { _id: 'Admin' } ]
+
+
+bb2> db.EmployeeDetails.aggregate([ {$group: {_id:"$department.deptname" ,
+ "Total Employee:":{$sum:1}  }}  ])
+
+[
+  { _id: 'HR', 'Total Employee:': 2 },
+  { _id: 'Admin', 'Total Employee:': 3 },
+  { _id: 'Sales', 'Total Employee:': 6 }
+]
+
+match & project
+----------
+
+bb2> db.EmployeeDetails.aggregate([  {$match: {gender:"Male"}},
+ {$project:{_id:0,empname:1,gender:1}}  ])
+
+
+
+[
+  { empname: 'Mejo', gender: 'Male' },
+  { empname: 'Jeeva', gender: 'Male' },
+  { empname: 'Sandy', gender: 'Male' },
+  { empname: 'John', gender: 'Male' },
+  { empname: 'Allen', gender: 'Male' },
+  { empname: 'Harish', gender: 'Male' },
+  { empname: 'Manikandan', gender: 'Male' }
+]
+
+
+
+bb2> db.EmployeeDetails.aggregate([
+
+{$match: {gender:"Male"}}, 
+{$project:{_id:0,empname:1,gender:1}},
+{$sort:{empname:1}}
+
+ ])
+
+
+[
+  { empname: 'Allen', gender: 'Male' },
+  { empname: 'Harish', gender: 'Male' },
+  { empname: 'Jeeva', gender: 'Male' },
+  { empname: 'John', gender: 'Male' },
+  { empname: 'Manikandan', gender: 'Male' },
+  { empname: 'Mejo', gender: 'Male' },
+  { empname: 'Sandy', gender: 'Male' }
+]
+
+
+match,group,sum
+-------------------------
+bb2> db.EmployeeDetails.aggregate([ 
+
+{$match:{gender:"Male"}}, 
+{$group:{_id:"$department.deptname", "Total Salary":{$sum:"$salary"} }}
+
+ ])
+
+
+[
+  { _id: 'HR', 'Total Salary': 180000 },
+  { _id: 'Sales', 'Total Salary': 171001.5 }
+]
+
+
+bb2> db.EmployeeDetails.aggregate([ 
+{$match:{gender:"Female"}}, 
+{$group:{_id:"$department.deptname", "Total Salary":{$sum:"$salary"} }} ])
+[
+  { _id: 'Admin', 'Total Salary': 44650 },
+  { _id: 'HR', 'Total Salary': 47000 }
+]
+
+
+min
+------
+bb2> db.EmployeeDetails.aggregate([ {$match:{gender:"Male"}},
+ {$group:{_id:"$department.deptname", "Minimum Salary":{$min:"$salary"} }} ])
+[
+  { _id: 'Sales', 'Minimum Salary': 23000 },
+  { _id: 'HR', 'Minimum Salary': 180000 }
+]
+
+bb2> db.EmployeeDetails.aggregate([ {$match:{gender:"Female"}}, 
+{$group:{_id:"$department.deptname", "Minimum Salary":{$min:"$salary"} }} ])
+
+[
+  { _id: 'Admin', 'Minimum Salary': 12550 },
+  { _id: 'HR', 'Minimum Salary': 47000 }
+]
+
+max:
+-----------
+bb2> db.EmployeeDetails.aggregate([ {$match:{gender:"Female"}}, 
+{$group:{_id:"$department.deptname", "Maximum Salary":{$max:"$salary"} }} ])
+[
+  { _id: 'Admin', 'Maximum Salary': 18550 },
+  { _id: 'HR', 'Maximum Salary': 47000 }
+]
+
+
+Avg
+------------
+bb2> db.EmployeeDetails.aggregate([ {$match:{gender:"Male"}}, 
+{$group:{_id:"$department.deptname", "Average Salary":{$avg:"$salary"} }} ])
+[
+  { _id: 'Sales', 'Average Salary': 28500.25 },
+  { _id: 'HR', 'Average Salary': 180000 }
+]
+
+findAndModify
+------------------------
+
+bb2> db.EmployeeDetails.findAndModify({query:{empname:"Manikandan"}, 
+update:{$set:{"department.deptname":"Marketing"}}, upsert:true})
+
+
+{
+  _id: ObjectId("65607efaafbf47d442295df6"),
+  empno: 10259,
+  empname: 'Manikandan',
+  gender: 'Male',
+  salary: 24000,
+  department: { deptname: 'Marketing' }
+}
+
+
+bb2> db.EmployeeDetails.findAndModify({query:{empname:"Subramaniam"}, 
+update:{$set:{empno:12899,empname:"Subramaniam",gender:"Male",salary:30000,
+"department.deptname":"Marketing"}}, upsert:true})
+
+
+Array Operators
+------------------------------
+
+push:
+----------
+bb2> db.Demo_Array.updateOne( {Days:"Sun"}, {$push:{Days:"Wed"}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+bb2> db.Demo_Array.findOne( {Days:"Mon"})
+{
+  _id: ObjectId("6560a004f82eb961d7810228"),
+  Days: [ 'Sun', 'Mon', 'Tues', 'Wed' ],
+  Colors: [ 'Red', 'Blue', 'Pink', 'Green' ]
+}
+
+
+pop:  - to remove the last element from the array, by specify 1
+--------------
+
+bb2> db.Demo_Array.updateOne( {Days:"Sun"}, {$pop:{Days:1}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+bb2> db.Demo_Array.findOne( {Days:"Mon"})
+{
+  _id: ObjectId("6560a004f82eb961d7810228"),
+  Days: [ 'Sun', 'Mon', 'Tues' ],
+  Colors: [ 'Red', 'Blue', 'Pink', 'Green' ]
+}
+
+pop:  - to remove the first element from the array, by specify -1
+--------------
+bb2> db.Demo_Array.updateOne( {Days:"Sun"}, {$pop:{Days:-1}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+Pull to remove data anywhere from the array
+-----------------------------------------------------
+
+bb2> db.Demo_Array.updateOne( {Colors:"Red"},{$pull:{Colors:"Blue"}} )
+
+bb2> db.Demo_Array.find()
+[
+  {
+    _id: ObjectId("6560a004f82eb961d7810228"),
+    Days: [ 'Tues' ],
+    Colors: [ 'Red', 'Pink', 'Green' ]
+  }
+]
+
+push and each - to add multiple elements into an array
+-----------------------------------------------------------------------------------
+bb2> db.Demo_Array.updateOne( {Days:"Tues"}, {$push:{Days:{$each:["Wed","Thurs","Fri","Sat"]}}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+bb2> db.Demo_Array.find()
+[
+  {
+    _id: ObjectId("6560a004f82eb961d7810228"),
+    Days: [ 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat' ],
+    Colors: [ 'Red', 'Pink', 'Green' ]
+  }
+]
+
+Pull and $in to remove multiple elements anywhere from an array
+---------------------------------------------------------------------------------------------
+
+
+bb2> db.Demo_Array.updateOne( {Days:"Tues"}, {$pull:{Days:{$in:["Wed","Sat","Sun","Mon"]}}} )
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+
+
+bb2> db.Demo_Array.find()
+[
+  {
+    _id: ObjectId("6560a004f82eb961d7810228"),
+    Days: [ 'Tues', 'Thurs', 'Fri' ],
+    Colors: [ 'Red', 'Pink', 'Green' ]
+  }
+]
+
+
+
+
+
+
+
+
+

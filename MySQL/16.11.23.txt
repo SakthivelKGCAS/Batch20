@@ -1,0 +1,664 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| batch17            |
+| batch20            |
+| blrdb              |
+| bookdb             |
+| cbebatch17         |
+| chnbatch2          |
+| demo_blr           |
+| demo_thrissurdb    |
+| demochennai        |
+| emp_det            |
+| employee           |
+| information_schema |
+| kgm                |
+| login_page         |
+| login_page1        |
+| mysql              |
+| performance_schema |
+| productdb          |
+| sakila             |
+| student_db         |
+| student_det        |
+| student_management |
+| sys                |
+| testdb             |
+| thrissurdb         |
+| ticket             |
+| user_manage        |
+| user_management    |
+| userdb             |
+| usermanage         |
+| workbench          |
+| world              |
++--------------------+
+35 rows in set (2.36 sec)
+
+mysql> use batch20;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| prod_det          |
+| stu_mark          |
+| student_det       |
+| students          |
++-------------------+
+4 rows in set (0.48 sec)
+
+mysql> create table dmo_null(id int);
+Query OK, 0 rows affected (3.75 sec)
+
+mysql> desc dmo_null;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | YES  |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+1 row in set (0.26 sec)
+
+mysql> insert into dmo_null values(102),(128),(2001);
+Query OK, 3 rows affected (0.27 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into dmo_null values();
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from dmo_null;
++------+
+| id   |
++------+
+|  102 |
+|  128 |
+| 2001 |
+| NULL |
++------+
+4 rows in set (0.01 sec)
+
+mysql> create table dmo_NTnull(id int NOT NULL);
+Query OK, 0 rows affected (0.37 sec)
+
+mysql> desc dmo_NTnull;
++-------+------+------+-----+---------+-------+
+| Field | Type | Null | Key | Default | Extra |
++-------+------+------+-----+---------+-------+
+| id    | int  | NO   |     | NULL    |       |
++-------+------+------+-----+---------+-------+
+1 row in set (0.07 sec)
+
+mysql> insert into dmo_NTnull values(102),(128),(2001);
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into dmo_NTnull values();
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql> insert into dmo_NTnull values(102),(128),(2001);
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from dmo_ntnull;
++------+
+| id   |
++------+
+|  102 |
+|  128 |
+| 2001 |
+|  102 |
+|  128 |
+| 2001 |
++------+
+6 rows in set (0.00 sec)
+
+mysql> create table dmo_uniq(name varchar(20) unique key);
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> desc dmo_uniq;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| name  | varchar(20) | YES  | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+1 row in set (0.05 sec)
+
+mysql> insert into dmo_uniq('Raj');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''Raj')' at line 1
+mysql> insert into dmo_uniq values('Raj');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into dmo_uniq values('shankar');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into dmo_uniq values('shankar');
+ERROR 1062 (23000): Duplicate entry 'shankar' for key 'dmo_uniq.name'
+mysql> insert into dmo_uniq values('');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from dmo_uniq;
++---------+
+| name    |
++---------+
+|         |
+| Raj     |
+| shankar |
++---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into dmo_uniq values();
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from dmo_uniq;
++---------+
+| name    |
++---------+
+| NULL    |
+|         |
+| Raj     |
+| shankar |
++---------+
+4 rows in set (0.00 sec)
+
+mysql> insert into dmo_uniq values('arun');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from dmo_uniq;
++---------+
+| name    |
++---------+
+| NULL    |
+|         |
+| arun    |
+| Raj     |
+| shankar |
++---------+
+5 rows in set (0.00 sec)
+
+mysql> insert into dmo_uniq values();
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from dmo_uniq;
++---------+
+| name    |
++---------+
+| NULL    |
+| NULL    |
+|         |
+| arun    |
+| Raj     |
+| shankar |
++---------+
+6 rows in set (0.00 sec)
+
+mysql> create table product_det(pid int primary key,pname varchar(20),price double(10,2));
+Query OK, 0 rows affected, 1 warning (1.13 sec)
+
+mysql> desc product_det;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | int          | NO   | PRI | NULL    |       |
+| pname | varchar(20)  | YES  |     | NULL    |       |
+| price | double(10,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into product_det values(201,'rx100',75999.99),(202,'rs200',159000.00),(254,'Royal enfield',200000.00);
+Query OK, 3 rows affected (0.13 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into product_det values(154,'KTM',215999.99),(1582,'BMW',159000.00),(199,'Splendor',80000.00);
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into product_det values(155,'Pulsar150',115999.99),(1502,'FX',160000.00),(159,'unicorn',95000.00);
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into product_det values(155,'Pulsar150',115999.99);
+ERROR 1062 (23000): Duplicate entry '155' for key 'product_det.PRIMARY'
+mysql> insert into product_det values();
+ERROR 1364 (HY000): Field 'pid' doesn't have a default value
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
++------+---------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select * from product_det limit 3;
++-----+-----------+-----------+
+| pid | pname     | price     |
++-----+-----------+-----------+
+| 154 | KTM       | 215999.99 |
+| 155 | Pulsar150 | 115999.99 |
+| 159 | unicorn   |  95000.00 |
++-----+-----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product_det limit 6;
++-----+-----------+-----------+
+| pid | pname     | price     |
++-----+-----------+-----------+
+| 154 | KTM       | 215999.99 |
+| 155 | Pulsar150 | 115999.99 |
+| 159 | unicorn   |  95000.00 |
+| 199 | Splendor  |  80000.00 |
+| 201 | rx100     |  75999.99 |
+| 202 | rs200     | 159000.00 |
++-----+-----------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from product_det limit 3 skip 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'skip 5' at line 1
+mysql> select * from product_det limit 3 and skip 5;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'and skip 5' at line 1
+mysql> select * from product_det limit 2 skip 4
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'skip 4' at line 1
+mysql> select * from product_det skip 5 limit 3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '5 limit 3' at line 1
+mysql> select * from product_det limit 3 offset 5;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
++------+---------------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
++------+---------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> select * from product_det limit 2 offset 2;
++-----+----------+----------+
+| pid | pname    | price    |
++-----+----------+----------+
+| 159 | unicorn  | 95000.00 |
+| 199 | Splendor | 80000.00 |
++-----+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
++------+---------------+-----------+
+9 rows in set (0.00 sec)
+
+mysql> 	create table cust_det(cid varchar(10) primary key,cname varchar(24),address varchar(30),pid int, foreign key(pid) references product_det(pid));
+Query OK, 0 rows affected (1.28 sec)
+
+mysql> desc cust_det;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cid     | varchar(10) | NO   | PRI | NULL    |       |
+| cname   | varchar(24) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| pid     | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.05 sec)
+
+mysql> insert into cust_det values('c001','Akash','Chennai',154);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into cust_det values('c002','Sanjay','Madurai',202),('c003','Vignesh','Kangeyum',201),('c111','Ashok','Karaikudi',199);
+Query OK, 3 rows affected (0.08 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into cust_det values('c007','James','Chennai',1789);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`batch20`.`cust_det`, CONSTRAINT `cust_det_ibfk_1` FOREIGN KEY (`pid`) REFERENCES `product_det` (`pid`))
+mysql> insert into product_det values(1789,'TVS 50',15999.99);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into cust_det values('c007','James','Chennai',1789);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> create table depart(did int primary key,dname varchar(25));
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> desc depart;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| did   | int         | NO   | PRI | NULL    |       |
+| dname | varchar(25) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.04 sec)
+
+mysql> insert into depart values(1200,'Production'),(5001,'Sales'),(5005,'Marketing'),(6666,'Service');
+Query OK, 4 rows affected (0.05 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from depart;
++------+------------+
+| did  | dname      |
++------+------------+
+| 1200 | Production |
+| 5001 | Sales      |
+| 5005 | Marketing  |
+| 6666 | Service    |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create table emp(eid int primary key,ename varchar(30),did int,email varchar(40) unique key, foreign key(did) references depart(did));
+Query OK, 0 rows affected (1.33 sec)
+
+mysql> desc emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| eid   | int         | NO   | PRI | NULL    |       |
+| ename | varchar(30) | YES  |     | NULL    |       |
+| did   | int         | YES  | MUL | NULL    |       |
+| email | varchar(40) | YES  | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into emp values(78,'Murali',1200,'mur@gmail.com');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into emp values(79,'Kavin',5001,'kv@gmail.com');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp values(79,'Sanjay',5001,'kv@gmail.com');
+ERROR 1062 (23000): Duplicate entry '79' for key 'emp.PRIMARY'
+mysql> insert into emp values(80,'Sanjay',5001,'kv@gmail.com');
+ERROR 1062 (23000): Duplicate entry 'kv@gmail.com' for key 'emp.email'
+mysql> insert into emp values(80,'Sanjay',5001,'san@gmail.com');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> create table feedback(pid int,cid varchar(10),rating int check(rating >=1 and rating<=10), foreign key(pid) references product_det(pid), foreign key(cid) references cust_det(cid));
+Query OK, 0 rows affected (1.56 sec)
+
+mysql> desc feedback;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| pid    | int         | YES  | MUL | NULL    |       |
+| cid    | varchar(10) | YES  | MUL | NULL    |       |
+| rating | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> insert into feedback values(154,'c001',5);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into feedback values(202,'c002',10);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into feedback values(201,'c003',1);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into feedback values(1789,'c007',90);
+ERROR 3819 (HY000): Check constraint 'feedback_chk_1' is violated.
+mysql> insert into feedback values(1789,'c007',0);
+ERROR 3819 (HY000): Check constraint 'feedback_chk_1' is violated.
+mysql> create table depart1(did int primary key,dname varchar(25));
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> insert into depart1 values(1200,'Production'),(5001,'Sales'),(5005,'Marketing'),(6666,'Service');
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from depart1;
++------+------------+
+| did  | dname      |
++------+------------+
+| 1200 | Production |
+| 5001 | Sales      |
+| 5005 | Marketing  |
+| 6666 | Service    |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create table emp(eid int primary key,ename varchar(30),did int,email varchar(40) unique key, foreign key(did) references depart(did) ON DELETE CASCADE);
+ERROR 1050 (42S01): Table 'emp' already exists
+mysql> create table emp1(eid int primary key,ename varchar(30),did int,email varchar(40) unique key, foreign key(did) references depart(did) ON DELETE CASCADE);
+Query OK, 0 rows affected (0.43 sec)
+
+mysql> insert into emp1 values(78,'Murali',1200,'mur@gmail.com');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into emp1 values(79,'Sanjay',5001,'kv@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into emp values(88,'HARI',6666,'hari@gmail.com');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into emp1 values(88,'HARI',6666,'hari@gmail.com');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from emp1;
++-----+--------+------+----------------+
+| eid | ename  | did  | email          |
++-----+--------+------+----------------+
+|  78 | Murali | 1200 | mur@gmail.com  |
+|  79 | Sanjay | 5001 | kv@gmail.com   |
+|  88 | HARI   | 6666 | hari@gmail.com |
++-----+--------+------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from depart1;
++------+------------+
+| did  | dname      |
++------+------------+
+| 1200 | Production |
+| 5001 | Sales      |
+| 5005 | Marketing  |
+| 6666 | Service    |
++------+------------+
+4 rows in set (0.00 sec)
+
+mysql> delete from depart1 where did=6666;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from depart1;
++------+------------+
+| did  | dname      |
++------+------------+
+| 1200 | Production |
+| 5001 | Sales      |
+| 5005 | Marketing  |
++------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp1;
++-----+--------+------+----------------+
+| eid | ename  | did  | email          |
++-----+--------+------+----------------+
+|  78 | Murali | 1200 | mur@gmail.com  |
+|  79 | Sanjay | 5001 | kv@gmail.com   |
+|  88 | HARI   | 6666 | hari@gmail.com |
++-----+--------+------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> create table emp2(eid int primary key,ename varchar(30),did int,email varchar(40) unique key, foreign key(did) references depart1(did) ON DELETE CASCADE);
+Query OK, 0 rows affected (0.30 sec)
+
+mysql> insert into emp2 values(79,'Sanjay',5001,'kv@gmail.com');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into emp2 values(88,'HARI',6666,'hari@gmail.com');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`batch20`.`emp2`, CONSTRAINT `emp2_ibfk_1` FOREIGN KEY (`did`) REFERENCES `depart1` (`did`) ON DELETE CASCADE)
+mysql> insert into emp2 values(78,'Murali',1200,'mur@gmail.com');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from emp2;
++-----+--------+------+---------------+
+| eid | ename  | did  | email         |
++-----+--------+------+---------------+
+|  78 | Murali | 1200 | mur@gmail.com |
+|  79 | Sanjay | 5001 | kv@gmail.com  |
++-----+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from depart1;
++------+------------+
+| did  | dname      |
++------+------------+
+| 1200 | Production |
+| 5001 | Sales      |
+| 5005 | Marketing  |
++------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update depart1 set dname='billing' where did=1200;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp2;
++-----+--------+------+---------------+
+| eid | ename  | did  | email         |
++-----+--------+------+---------------+
+|  78 | Murali | 1200 | mur@gmail.com |
+|  79 | Sanjay | 5001 | kv@gmail.com  |
++-----+--------+------+---------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from depart1;
++------+-----------+
+| did  | dname     |
++------+-----------+
+| 1200 | billing   |
+| 5001 | Sales     |
+| 5005 | Marketing |
++------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> delete from depart1 where did=1200;
+Query OK, 1 row affected (0.07 sec)
+
+mysql> select * from emp2;
++-----+--------+------+--------------+
+| eid | ename  | did  | email        |
++-----+--------+------+--------------+
+|  79 | Sanjay | 5001 | kv@gmail.com |
++-----+--------+------+--------------+
+1 row in set (0.00 sec)
+
+mysql> create table student_info(rollno int primary key auto_increment, name varchar(25), eoy int default 2023);
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> desc student_info;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| rollno | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(25) | YES  |     | NULL    |                |
+| eoy    | int         | YES  |     | 2023    |                |
++--------+-------------+------+-----+---------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student_info(name) values('Arun');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into student_info(name) values('Bala');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into student_info(name) values('Chandru');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from student_info;
++--------+---------+------+
+| rollno | name    | eoy  |
++--------+---------+------+
+|      1 | Arun    | 2023 |
+|      2 | Bala    | 2023 |
+|      3 | Chandru | 2023 |
++--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> alter table student_info auto_increment=19001;
+Query OK, 0 rows affected (0.31 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into student_info(name) values('Dinesh');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into student_info(name) values('Dwarak');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into student_info(name) values('Sampath');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from student_info;
++--------+---------+------+
+| rollno | name    | eoy  |
++--------+---------+------+
+|      1 | Arun    | 2023 |
+|      2 | Bala    | 2023 |
+|      3 | Chandru | 2023 |
+|  19001 | Dinesh  | 2023 |
+|  19002 | Dwarak  | 2023 |
+|  19003 | Sampath | 2023 |
++--------+---------+------+
+6 rows in set (0.00 sec)
+

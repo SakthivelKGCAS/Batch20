@@ -1,0 +1,71 @@
+Null Values:
+--------------
+
+Null is a missing/empty value in the column of a table.
+
+Not Null:
+-------------
+
+Not Null doesn't accept a missing/empty value in the column of a table.
+it accepts duplicate values of a column.
+
+syntax:
+
+create table tablename( columnname1 datatype NOT NULL,columnname2 datatype NOT NULL);
+
+UNIQUE KEY:
+--------------------
+
+It doesn't allow the duplicate values in a column of a table but it allows NULL values.
+
+syntax:
+
+create table tablename( columnname1 datatype UNIQUE KEY,columnname2 datatype UNIQUE KEY);
+
+PRIMARY KEY:(NOT NULL + UNIQUE KEY) / CANDIDATE KEY
+---------------------
+
+It doesn't allow DUPLICATE values as well as NULL values.
+
+It act as foreign key for the another table.
+
+TO UNIQUELY IDENTIFIES THE RECORD IN A TABLE
+
+
+
+syntax:
+
+SINGLE COLUMN
+------------------------
+create table tablename( columnname1 datatype PRIMARY KEY,columnname2 datatype  
+..... columnname2 datatype);
+
+OR
+MULTIPLE COLUMN
+----------------------------
+create table tablename( columnname1 datatype,columnname2 datatype  
+..... columnname2 datatype, PRIMARY KEY(columnname1,columnname2));
+
+
+Foreign Key:
+------------------------
+
+syntax:
+
+create table tablename( columnname1 datatype,columnname2 datatype  
+..... columnname2 datatype, FOREIGN KEY(columnname1) REFERENCES  
+
+TABLE_NAME(PRIMARY KEY COLUMNNAME)
+);
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,761 @@
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select pid from product_det union select pid from cust_det;
++------+
+| pid  |
++------+
+|  154 |
+|  155 |
+|  159 |
+|  199 |
+|  201 |
+|  202 |
+|  254 |
+| 1502 |
+| 1582 |
+| 1789 |
++------+
+10 rows in set (0.09 sec)
+
+mysql> select pid,pname from product_det union select pid,cname from cust_det;
++------+---------------+
+| pid  | pname         |
++------+---------------+
+|  154 | KTM           |
+|  155 | Pulsar150     |
+|  159 | unicorn       |
+|  199 | Splendor      |
+|  201 | rx100         |
+|  202 | rs200         |
+|  254 | Royal enfield |
+| 1502 | FX            |
+| 1582 | BMW           |
+| 1789 | TVS 50        |
+|  154 | Akash         |
+|  202 | Sanjay        |
+|  201 | Vignesh       |
+| 1789 | James         |
+|  199 | Ashok         |
++------+---------------+
+15 rows in set (0.00 sec)
+
+mysql> select pid from product_det union select pid from cust_det;
++------+
+| pid  |
++------+
+|  154 |
+|  155 |
+|  159 |
+|  199 |
+|  201 |
+|  202 |
+|  254 |
+| 1502 |
+| 1582 |
+| 1789 |
++------+
+10 rows in set (0.00 sec)
+
+mysql> select pid from product_det union all select pid from cust_det;
++------+
+| pid  |
++------+
+|  154 |
+|  155 |
+|  159 |
+|  199 |
+|  201 |
+|  202 |
+|  254 |
+| 1502 |
+| 1582 |
+| 1789 |
+|  154 |
+|  199 |
+|  201 |
+|  202 |
+| 1789 |
++------+
+15 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| bike_det          |
+| bill_det          |
+| cust_det          |
+| cust_det3         |
+| depart            |
+| depart1           |
+| departments       |
+| dmo_ntnull        |
+| dmo_null          |
+| dmo_uniq          |
+| doc_det           |
+| emp               |
+| emp1              |
+| emp2              |
+| employees         |
+| feedback          |
+| patient_det       |
+| prod_det          |
+| product_det       |
+| project_guide     |
+| stu_mark          |
+| student_det       |
+| student_info      |
+| students          |
+| table1            |
+| table2            |
++-------------------+
+26 rows in set (0.85 sec)
+
+mysql> select * from prod_det;
++------+------------+---------+-----------+
+| pid  | pname      | brand   | price     |
++------+------------+---------+-----------+
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | apple   |  80000.99 |
+| i15  | iphone15   | apple   |  70999.99 |
+| s24  | samsungPro | Samsung | 150000.00 |
+| op   | oneplus    | oppo    |  52000.00 |
+| rm1  | realme1    | MI      |  25000.99 |
+| rm2  | realme21   | MI      |  27999.99 |
+| ng21 | nokiag21   | nokia   |  18500.00 |
+| nk11 | nokia1100  | nokia   |   2500.00 |
+| rd   | redme1     | MI      |  12500.99 |
+| rd2  | redme2     | MI      |  17999.99 |
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | apple   |  80000.99 |
+| i15  | iphone15   | apple   |  70999.99 |
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | apple   |  80000.99 |
+| i15  | iphone15   | apple   |  70999.99 |
++------+------------+---------+-----------+
+20 rows in set (0.06 sec)
+
+mysql> select * from prod_det where brand = 'apple';
++------+----------+-------+----------+
+| pid  | pname    | brand | price    |
++------+----------+-------+----------+
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
++------+----------+-------+----------+
+6 rows in set (0.04 sec)
+
+mysql> explain select * from prod_det where brand = 'apple';
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | prod_det | NULL       | ALL  | NULL          | NULL | NULL    | NULL |   20 |    10.00 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.06 sec)
+
+mysql> create index index1 on prod_det(brand);
+Query OK, 0 rows affected (1.95 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod_det where brand = 'apple';
++------+----------+-------+----------+
+| pid  | pname    | brand | price    |
++------+----------+-------+----------+
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
++------+----------+-------+----------+
+6 rows in set (0.04 sec)
+
+mysql> explain select * from prod_det where brand = 'apple';
++----+-------------+----------+------------+------+---------------+--------+---------+-------+------+----------+-------+
+| id | select_type | table    | partitions | type | possible_keys | key    | key_len | ref   | rows | filtered | Extra |
++----+-------------+----------+------------+------+---------------+--------+---------+-------+------+----------+-------+
+|  1 | SIMPLE      | prod_det | NULL       | ref  | index1        | index1 | 83      | const |    6 |   100.00 | NULL  |
++----+-------------+----------+------------+------+---------------+--------+---------+-------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> drop index index1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> drop index index1 on prod_det;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod_det where brand = 'apple';
++------+----------+-------+----------+
+| pid  | pname    | brand | price    |
++------+----------+-------+----------+
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
+| i14  | iphone14 | apple | 80000.99 |
+| i15  | iphone15 | apple | 70999.99 |
++------+----------+-------+----------+
+6 rows in set (0.00 sec)
+
+mysql> explain select * from prod_det where brand = 'apple';
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra       |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+|  1 | SIMPLE      | prod_det | NULL       | ALL  | NULL          | NULL | NULL    | NULL |   20 |    10.00 | Using where |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select * from product_Det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.06 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from bill_det;
++---------+------+------+------------+-----------+
+| bid     | pid  | cid  | bdate      | total_amt |
++---------+------+------+------------+-----------+
+| 1100203 |  154 | c001 | 2023-11-18 | 217999.99 |
+| 1100204 |  202 | c002 | 2023-10-08 | 161999.99 |
++---------+------+------+------------+-----------+
+2 rows in set (0.10 sec)
+
+mysql> select custid,custname from cust_Det where prodid in (select prodid from bill where total_amt >200000.00);
+ERROR 1146 (42S02): Table 'batch20.bill' doesn't exist
+mysql> select cid,cname from cust_Det where pid in (select pid from bill_det where total_amt >200000.00);
++------+-------+
+| cid  | cname |
++------+-------+
+| c001 | Akash |
++------+-------+
+1 row in set (0.10 sec)
+
+mysql> select * from bill_det;
++---------+------+------+------------+-----------+
+| bid     | pid  | cid  | bdate      | total_amt |
++---------+------+------+------------+-----------+
+| 1100203 |  154 | c001 | 2023-11-18 | 217999.99 |
+| 1100204 |  202 | c002 | 2023-10-08 | 161999.99 |
++---------+------+------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select max(total_amt) from bill_det;
++----------------+
+| max(total_amt) |
++----------------+
+|      217999.99 |
++----------------+
+1 row in set (0.10 sec)
+
+mysql> select bid,pid,cid,bdate, max(total_amt) from bill_det;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'batch20.bill_det.bid'; this is incompatible with sql_mode=only_full_group_by
+mysql> select bid,pid,cid, bdate,total_amt from bill_det where total_amt > (select max(total_amt) from bill_det);
+Empty set (0.04 sec)
+
+mysql> select bid,pid,cid, bdate,total_amt from bill_det where total_amt = (select max(total_amt) from bill_det);
++---------+------+------+------------+-----------+
+| bid     | pid  | cid  | bdate      | total_amt |
++---------+------+------+------------+-----------+
+| 1100203 |  154 | c001 | 2023-11-18 | 217999.99 |
++---------+------+------+------------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from product_Det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from product_Det where price = (select max(price) from product_det);
++-----+-------+-----------+
+| pid | pname | price     |
++-----+-------+-----------+
+| 154 | KTM   | 215999.99 |
++-----+-------+-----------+
+1 row in set (0.00 sec)
+
+mysql> select * from employees;
++--------+----------+------------+---------------+
+| emp_id | emp_name | emp_salary | department_id |
++--------+----------+------------+---------------+
+|      1 | Ashok    |      50000 |             1 |
+|      2 | Sekar    |      60000 |             1 |
+|      3 | Balaji   |      55000 |             2 |
+|      4 | Murugan  |      60000 |             1 |
+|      5 | Hari     |      60000 |             1 |
+|      6 | Vijay    |      55000 |             3 |
+|      7 | Meena    |      43000 |             3 |
+|      8 | Ganga    |      44000 |             3 |
++--------+----------+------------+---------------+
+8 rows in set (0.05 sec)
+
+mysql> select * from departments;
++---------------+-----------------+
+| department_id | department_name |
++---------------+-----------------+
+|             1 | Sales           |
+|             2 | Marketing       |
+|             3 | IT              |
++---------------+-----------------+
+3 rows in set (0.03 sec)
+
+mysql> select emp_name, (select department_name from departments where department_id = employees.department_id) from employees;
++----------+-----------------------------------------------------------------------------------------+
+| emp_name | (select department_name from departments where department_id = employees.department_id) |
++----------+-----------------------------------------------------------------------------------------+
+| Ashok    | Sales                                                                                   |
+| Sekar    | Sales                                                                                   |
+| Balaji   | Marketing                                                                               |
+| Murugan  | Sales                                                                                   |
+| Hari     | Sales                                                                                   |
+| Vijay    | IT                                                                                      |
+| Meena    | IT                                                                                      |
+| Ganga    | IT                                                                                      |
++----------+-----------------------------------------------------------------------------------------+
+8 rows in set (0.03 sec)
+
+mysql> select emp_name, (select department_name from departments where department_id = employees.department_id) as Department from employees;
++----------+------------+
+| emp_name | Department |
++----------+------------+
+| Ashok    | Sales      |
+| Sekar    | Sales      |
+| Balaji   | Marketing  |
+| Murugan  | Sales      |
+| Hari     | Sales      |
+| Vijay    | IT         |
+| Meena    | IT         |
+| Ganga    | IT         |
++----------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employees;
++--------+----------+------------+---------------+
+| emp_id | emp_name | emp_salary | department_id |
++--------+----------+------------+---------------+
+|      1 | Ashok    |      50000 |             1 |
+|      2 | Sekar    |      60000 |             1 |
+|      3 | Balaji   |      55000 |             2 |
+|      4 | Murugan  |      60000 |             1 |
+|      5 | Hari     |      60000 |             1 |
+|      6 | Vijay    |      55000 |             3 |
+|      7 | Meena    |      43000 |             3 |
+|      8 | Ganga    |      44000 |             3 |
++--------+----------+------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> select emp_name,emp_salary from employees where salary > (select avg(salary) from employees);
+ERROR 1054 (42S22): Unknown column 'salary' in 'where clause'
+mysql> select emp_name,emp_salary from employees where emp_salary > (select avg(emp_salary) from employees);
++----------+------------+
+| emp_name | emp_salary |
++----------+------------+
+| Sekar    |      60000 |
+| Balaji   |      55000 |
+| Murugan  |      60000 |
+| Hari     |      60000 |
+| Vijay    |      55000 |
++----------+------------+
+5 rows in set (0.04 sec)
+
+mysql> select emp_name,emp_salary from employees where emp_salary = (select max(emp_salary) from employees);
++----------+------------+
+| emp_name | emp_salary |
++----------+------------+
+| Sekar    |      60000 |
+| Murugan  |      60000 |
+| Hari     |      60000 |
++----------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from employees;
++--------+----------+------------+---------------+
+| emp_id | emp_name | emp_salary | department_id |
++--------+----------+------------+---------------+
+|      1 | Ashok    |      50000 |             1 |
+|      2 | Sekar    |      60000 |             1 |
+|      3 | Balaji   |      55000 |             2 |
+|      4 | Murugan  |      60000 |             1 |
+|      5 | Hari     |      60000 |             1 |
+|      6 | Vijay    |      55000 |             3 |
+|      7 | Meena    |      43000 |             3 |
+|      8 | Ganga    |      44000 |             3 |
++--------+----------+------------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select 1 from employees where department_id = e.department_id);
++----------+---------------+
+| emp_name | department_id |
++----------+---------------+
+| Ashok    |             1 |
+| Sekar    |             1 |
+| Balaji   |             2 |
+| Murugan  |             1 |
+| Hari     |             1 |
+| Vijay    |             3 |
+| Meena    |             3 |
+| Ganga    |             3 |
++----------+---------------+
+8 rows in set (0.00 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select 1 from employees where department_id = e.department_id having count(*)>2);
++----------+---------------+
+| emp_name | department_id |
++----------+---------------+
+| Ashok    |             1 |
+| Sekar    |             1 |
+| Murugan  |             1 |
+| Hari     |             1 |
+| Vijay    |             3 |
+| Meena    |             3 |
+| Ganga    |             3 |
++----------+---------------+
+7 rows in set (0.03 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select 1 from employees where department_id = e.department_id having count(*)>3);
++----------+---------------+
+| emp_name | department_id |
++----------+---------------+
+| Ashok    |             1 |
+| Sekar    |             1 |
+| Murugan  |             1 |
+| Hari     |             1 |
++----------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select 1 from employees where department_id = e.department_id having count(*)>2);
++----------+---------------+
+| emp_name | department_id |
++----------+---------------+
+| Ashok    |             1 |
+| Sekar    |             1 |
+| Murugan  |             1 |
+| Hari     |             1 |
+| Vijay    |             3 |
+| Meena    |             3 |
+| Ganga    |             3 |
++----------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select 2 from employees where department_id = e.department_id having count(*)>2);
++----------+---------------+
+| emp_name | department_id |
++----------+---------------+
+| Ashok    |             1 |
+| Sekar    |             1 |
+| Murugan  |             1 |
+| Hari     |             1 |
+| Vijay    |             3 |
+| Meena    |             3 |
+| Ganga    |             3 |
++----------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select 1 from employees where department_id = e.department_id having count(*)>2);
++----------+---------------+
+| emp_name | department_id |
++----------+---------------+
+| Ashok    |             1 |
+| Sekar    |             1 |
+| Murugan  |             1 |
+| Hari     |             1 |
+| Vijay    |             3 |
+| Meena    |             3 |
+| Ganga    |             3 |
++----------+---------------+
+7 rows in set (0.00 sec)
+
+mysql> select emp_name,department_id from employees e where exists(select * from employees where department_id = e.department_id having count(*)>2);
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'batch20.employees.emp_id'; this is incompatible with sql_mode=only_full_group_by
+mysql> create user 'batch20'@'localhost' identified by 'batch20';
+Query OK, 0 rows affected (0.86 sec)
+
+mysql> select user from mysql.user;
++------------------+
+| user             |
++------------------+
+| abc              |
+| batch17          |
+| batch20          |
+| cbebatch17       |
+| godwin           |
+| kgm              |
+| kgmblr           |
+| kgmchennai       |
+| mysql.infoschema |
+| mysql.session    |
+| mysql.sys        |
+| root             |
+| student1         |
++------------------+
+13 rows in set (0.00 sec)
+
+mysql> set password for 'batch20'@'localhost' = 'kgm';
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| bike_det          |
+| bill_det          |
+| cust_det          |
+| cust_det3         |
+| depart            |
+| depart1           |
+| departments       |
+| dmo_ntnull        |
+| dmo_null          |
+| dmo_uniq          |
+| doc_det           |
+| emp               |
+| emp1              |
+| emp2              |
+| employees         |
+| feedback          |
+| patient_det       |
+| prod_det          |
+| product_det       |
+| project_guide     |
+| stu_mark          |
+| student_det       |
+| student_info      |
+| students          |
+| table1            |
+| table2            |
++-------------------+
+26 rows in set (0.00 sec)
+
+mysql> select * from bike_det;
++-----+--------+----------+
+| bid | biname | price    |
++-----+--------+----------+
+|   2 | tvs 50 | 18500.00 |
+|   3 | shine  | 85999.99 |
++-----+--------+----------+
+2 rows in set (0.05 sec)
+
+mysql> grant select on bike_det to 'batch20'@'localhost';
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> show grants for 'batch20' @'localhost';
++---------------------------------------------------------------+
+| Grants for batch20@localhost                                  |
++---------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `batch20`@`localhost`                   |
+| GRANT SELECT ON `batch20`.`bike_det` TO `batch20`@`localhost` |
++---------------------------------------------------------------+
+2 rows in set (0.04 sec)
+
+mysql> grant insert on bike_det to 'batch20'@'localhost';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> show grants for 'batch20' @'localhost';
++-----------------------------------------------------------------------+
+| Grants for batch20@localhost                                          |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `batch20`@`localhost`                           |
+| GRANT SELECT, INSERT ON `batch20`.`bike_det` TO `batch20`@`localhost` |
++-----------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> grant update on bike_det to 'batch20'@'localhost';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show grants for 'batch20' @'localhost';
++-------------------------------------------------------------------------------+
+| Grants for batch20@localhost                                                  |
++-------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `batch20`@`localhost`                                   |
+| GRANT SELECT, INSERT, UPDATE ON `batch20`.`bike_det` TO `batch20`@`localhost` |
++-------------------------------------------------------------------------------+
+2 rows in set (0.04 sec)
+
+mysql> revoke update on bike_det from 'batch20'@'localhost';
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> show grants for 'batch20' @'localhost';
++-----------------------------------------------------------------------+
+| Grants for batch20@localhost                                          |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `batch20`@`localhost`                           |
+| GRANT SELECT, INSERT ON `batch20`.`bike_det` TO `batch20`@`localhost` |
++-----------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql> revoke insert on bike_det from 'batch20'@'localhost';
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> revoke select on bike_det from 'batch20'@'localhost';
+Query OK, 0 rows affected (0.04 sec)
+
+
+User Login
+-----------------------
+
+
+C:\Users\user>cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u batch20 -p
+Enter password: ***
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| batch20            |
+| information_schema |
+| performance_schema |
++--------------------+
+3 rows in set (0.34 sec)
+
+mysql> use batch20;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| bike_det          |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> desc bike_det;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| bid    | int          | NO   | PRI | NULL    |       |
+| biname | varchar(20)  | YES  |     | NULL    |       |
+| price  | double(10,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.18 sec)
+
+mysql> select * from bike_det;
++-----+--------+----------+
+| bid | biname | price    |
++-----+--------+----------+
+|   2 | tvs 50 | 18500.00 |
+|   3 | shine  | 85999.99 |
++-----+--------+----------+
+2 rows in set (0.05 sec)
+
+mysql> insert into bike_det values(4,'pulsar',120000.00);
+ERROR 1142 (42000): INSERT command denied to user 'batch20'@'localhost' for table 'bike_det'
+mysql> insert into bike_det values(4,'pulsar',120000.00);
+Query OK, 1 row affected (0.41 sec)
+
+mysql> select * from bike_det;
++-----+--------+-----------+
+| bid | biname | price     |
++-----+--------+-----------+
+|   2 | tvs 50 |  18500.00 |
+|   3 | shine  |  85999.99 |
+|   4 | pulsar | 120000.00 |
++-----+--------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update bike_det set biname = 'xl super' where bid=2;
+ERROR 1142 (42000): UPDATE command denied to user 'batch20'@'localhost' for table 'bike_det'
+mysql> update bike_det set biname = 'xl super' where bid=2;
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from bike_det;
++-----+----------+-----------+
+| bid | biname   | price     |
++-----+----------+-----------+
+|   2 | xl super |  18500.00 |
+|   3 | shine    |  85999.99 |
+|   4 | pulsar   | 120000.00 |
++-----+----------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> update bike_det set biname = 'xl super' where bid=2;
+ERROR 1142 (42000): UPDATE command denied to user 'batch20'@'localhost' for table 'bike_det'
+mysql> insert into bike_det values(4,'pulsar',120000.00);
+ERROR 1142 (42000): INSERT command denied to user 'batch20'@'localhost' for table 'bike_det'
+mysql> select * from bike_det;
+ERROR 1142 (42000): SELECT command denied to user 'batch20'@'localhost' for table 'bike_det'
+mysql> desc bike;
+ERROR 1146 (42S02): Table 'batch20.bike' doesn't exist
+mysql> desc bike_det;
+ERROR 1142 (42000): SELECT command denied to user 'batch20'@'localhost' for table 'bike_det'
+mysql>
+mysql> Terminal close -- exit!

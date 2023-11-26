@@ -1,0 +1,592 @@
+mysql> alter table bike_det modify bid int primary key;
+Query OK, 0 rows affected (2.30 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc bike_det;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| bid    | int          | NO   | PRI | NULL    |       |
+| biname | varchar(20)  | YES  |     | NULL    |       |
+| price  | double(10,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.03 sec)
+
+mysql> create table cust_det(cno varchar(10) primary key,cname varchar(20),address varchar(30),bid int);
+ERROR 1050 (42S01): Table 'cust_det' already exists
+mysql> create table cust_det2(cno varchar(10) primary key,cname varchar(20),address varchar(30),bid int);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> alter table cust_det2 modify foreign key(bid) references bike_det(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(bid) references bike_det(bid)' at line 1
+mysql> alter table cust_det2 modify bid int foreign key(bid) references bike_det(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(bid) references bike_det(bid)' at line 1
+mysql> alter table cust_det2 modify bid int, foreign key(bid) references bike_det(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(bid) references bike_det(bid)' at line 1
+mysql> alter table cust_det2 modify bid int(foreign key(bid) references bike_det(bid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'foreign key(bid) references bike_det(bid))' at line 1
+mysql> desc cust_det2;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cno     | varchar(10) | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| bid     | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.04 sec)
+
+mysql> alter table cust_det2 modify add foreign key(bid) references bike_det(bid);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'add foreign key(bid) references bike_det(bid)' at line 1
+mysql> alter table cust_det2  add foreign key(bid) references bike_det(bid);
+Query OK, 0 rows affected (1.37 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc cust_det2;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cno     | varchar(10) | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| bid     | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc bike_det;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| bid    | int          | NO   | PRI | NULL    |       |
+| biname | varchar(20)  | YES  |     | NULL    |       |
+| price  | double(10,2) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into bike_det values(1,'java',85000.00),(2,'tvs 50',18500.00),(3,'shine',85999.99);
+Query OK, 3 rows affected (0.21 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into cust_det2 values('c1','prathap','erode',1),('c2','kamal','theni',1),('c3','vasan','cbe',2);
+Query OK, 3 rows affected (0.11 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from bike_det;
++-----+--------+----------+
+| bid | biname | price    |
++-----+--------+----------+
+|   1 | java   | 85000.00 |
+|   2 | tvs 50 | 18500.00 |
+|   3 | shine  | 85999.99 |
++-----+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from cust_det2;
++-----+---------+---------+------+
+| cno | cname   | address | bid  |
++-----+---------+---------+------+
+| c1  | prathap | erode   |    1 |
+| c2  | kamal   | theni   |    1 |
+| c3  | vasan   | cbe     |    2 |
++-----+---------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> alter table cust_det2  add foreign key(bid) references bike_det(bid) on delete set null;
+Query OK, 3 rows affected (2.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from bike_det;
++-----+--------+----------+
+| bid | biname | price    |
++-----+--------+----------+
+|   1 | java   | 85000.00 |
+|   2 | tvs 50 | 18500.00 |
+|   3 | shine  | 85999.99 |
++-----+--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from cust_det2;
++-----+---------+---------+------+
+| cno | cname   | address | bid  |
++-----+---------+---------+------+
+| c1  | prathap | erode   |    1 |
+| c2  | kamal   | theni   |    1 |
+| c3  | vasan   | cbe     |    2 |
++-----+---------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> delete from bike_det where bid =1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`batch20`.`cust_det2`, CONSTRAINT `cust_det2_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bike_det` (`bid`))
+mysql> create table cust_det3(cno varchar(10) primary key,cname varchar(20),address varchar(30),bid int);
+Query OK, 0 rows affected (0.26 sec)
+
+mysql> alter table cust_det3  add foreign key(bid) references bike_det(bid) on DELETE SET NULL;
+Query OK, 0 rows affected (0.72 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into cust_det3 values('c1','prathap','erode',1),('c2','kamal','theni',1),('c3','vasan','cbe',2);
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from bike_det;
++-----+--------+----------+
+| bid | biname | price    |
++-----+--------+----------+
+|   1 | java   | 85000.00 |
+|   2 | tvs 50 | 18500.00 |
+|   3 | shine  | 85999.99 |
++-----+--------+----------+
+3 rows in set (0.05 sec)
+
+mysql> select * from cust_det3;
++-----+---------+---------+------+
+| cno | cname   | address | bid  |
++-----+---------+---------+------+
+| c1  | prathap | erode   |    1 |
+| c2  | kamal   | theni   |    1 |
+| c3  | vasan   | cbe     |    2 |
++-----+---------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> delete from bike_det where bid =1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`batch20`.`cust_det2`, CONSTRAINT `cust_det2_ibfk_1` FOREIGN KEY (`bid`) REFERENCES `bike_det` (`bid`))
+mysql> DROP TABLE CUST_DET2;
+Query OK, 0 rows affected (0.99 sec)
+
+mysql> delete from bike_det where bid =1;
+Query OK, 1 row affected (0.10 sec)
+
+mysql> select * from cust_det3;
++-----+---------+---------+------+
+| cno | cname   | address | bid  |
++-----+---------+---------+------+
+| c1  | prathap | erode   | NULL |
+| c2  | kamal   | theni   | NULL |
+| c3  | vasan   | cbe     |    2 |
++-----+---------+---------+------+
+3 rows in set (0.02 sec)
+
+mysql> create table doc_det(docid int primary key,dname varchar(25));
+Query OK, 0 rows affected (0.58 sec)
+
+mysql> create table patient_det(pid int primary key,pname varchar(25),problem varchar(25),docid int, foreign key(docid) references doc_det(docid));
+Query OK, 0 rows affected (0.47 sec)
+
+mysql> drop table patient_det;
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> create table patient_det(pid int primary key,pname varchar(25),problem varchar(25),docid int, foreign key(docid) references doc_det(docid) ON DELETE RESTRICT);
+Query OK, 0 rows affected (0.33 sec)
+
+mysql> insert into doc_det values(1,'Dr.Ashok'),(2,'Dr.Vignesh');
+Query OK, 2 rows affected (0.10 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into patient_det values(12,'Jakku','Fever',1),(13,'Makku','Cold',2);
+Query OK, 2 rows affected (0.21 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from doc_det;
++-------+------------+
+| docid | dname      |
++-------+------------+
+|     1 | Dr.Ashok   |
+|     2 | Dr.Vignesh |
++-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from patient_det;
++-----+-------+---------+-------+
+| pid | pname | problem | docid |
++-----+-------+---------+-------+
+|  12 | Jakku | Fever   |     1 |
+|  13 | Makku | Cold    |     2 |
++-----+-------+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> delete from doc_det where docid = 2;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`batch20`.`patient_det`, CONSTRAINT `patient_det_ibfk_1` FOREIGN KEY (`docid`) REFERENCES `doc_det` (`docid`) ON DELETE RESTRICT)
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| bike_det          |
+| cust_det          |
+| cust_det3         |
+| depart            |
+| depart1           |
+| departments       |
+| dmo_ntnull        |
+| dmo_null          |
+| dmo_uniq          |
+| doc_det           |
+| emp               |
+| emp1              |
+| emp2              |
+| employees         |
+| feedback          |
+| patient_det       |
+| prod_det          |
+| product_det       |
+| stu_mark          |
+| student_det       |
+| student_info      |
+| students          |
++-------------------+
+22 rows in set (0.00 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.13 sec)
+
+mysql> set autocommit=0;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into student_det values(7,'Jeeva',250125,'jee@gmail.com','2023-09-11');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva    |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+----------+--------------+----------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student_det where studid=125;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from student_det;
++--------+---------+--------------+----------------+------------+
+| studid | name    | mobilenumber | emailid        | doj        |
++--------+---------+--------------+----------------+------------+
+|      1 | Arun    |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh  |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani    |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar   |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> update student_det set name='prakash kumar' where studid =12;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh      |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> update student_det set name='prakash kumar' where studid =12;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> commit;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh      |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student_det where studid=125;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from student_det where studid=125;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_det set name ='Arun kumar' where studid = 1;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint update_arun;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into student_det values(7,'Jeeva',250125,'jee@gmail.com','2023-09-11');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun kumar    |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> rollback update_arun;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'update_arun' at line 1
+mysql> rollback to update_arun;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun kumar    |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> update student_det set name ='Arun' where studid = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint my_pt;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> rollback to my_pt;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+---------------+--------------+----------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student_det values(7,'Jeeva',250125,'jee@gmail.com','2023-09-11');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> savepoint my_pt1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> delete from student_det where studid = 7;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> rollback to my_pt1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arun          |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> update student_det set name ='Arunkumar' where studid = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> savepoint pt3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arunkumar     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> update student_det set name ='Arunprasath' where studid = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arunprasath   |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> insert into student_det values(8,'prem',245525,'pm@gmail.com','2023-09-11');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arunprasath   |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
+|      8 | prem          |       245525 | pm@gmail.com   | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+7 rows in set (0.00 sec)
+
+mysql> rollback to pt3;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from student_det;
++--------+---------------+--------------+----------------+------------+
+| studid | name          | mobilenumber | emailid        | doj        |
++--------+---------------+--------------+----------------+------------+
+|      1 | Arunkumar     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh        |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani          |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar         |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash kumar |       278025 | pk@gmail.com   | 2023-10-02 |
+|      7 | Jeeva         |       250125 | jee@gmail.com  | 2023-09-11 |
++--------+---------------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!

@@ -1,0 +1,1 @@
+mysql> tee d:\Dmysql.txt

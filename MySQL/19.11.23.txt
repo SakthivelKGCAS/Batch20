@@ -1,0 +1,359 @@
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| bike_det          |
+| cust_det          |
+| cust_det3         |
+| depart            |
+| depart1           |
+| departments       |
+| dmo_ntnull        |
+| dmo_null          |
+| dmo_uniq          |
+| doc_det           |
+| emp               |
+| emp1              |
+| emp2              |
+| employees         |
+| feedback          |
+| patient_det       |
+| prod_det          |
+| product_det       |
+| stu_mark          |
+| student_det       |
+| student_info      |
+| students          |
+| table1            |
+| table2            |
++-------------------+
+24 rows in set (1.52 sec)
+
+mysql> desc product_det;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | int          | NO   | PRI | NULL    |       |
+| pname | varchar(20)  | YES  |     | NULL    |       |
+| price | double(10,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.66 sec)
+
+mysql> desc cust_det;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| cid     | varchar(10) | NO   | PRI | NULL    |       |
+| cname   | varchar(24) | YES  |     | NULL    |       |
+| address | varchar(30) | YES  |     | NULL    |       |
+| pid     | int         | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.05 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.23 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.13 sec)
+
+mysql> select cust_det.cname,cust_det.address, product_det.pname,product_det.price from cust_det INNER JOIN product_det on cust_det.pid = product_det.pid;
++---------+-----------+----------+-----------+
+| cname   | address   | pname    | price     |
++---------+-----------+----------+-----------+
+| Akash   | Chennai   | KTM      | 215999.99 |
+| Sanjay  | Madurai   | rs200    | 159000.00 |
+| Vignesh | Kangeyum  | rx100    |  75999.99 |
+| James   | Chennai   | TVS 50   |  15999.99 |
+| Ashok   | Karaikudi | Splendor |  80000.00 |
++---------+-----------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select c.cname,c.address, p.pname,p.price from cust_det as c INNER JOIN product_det as p on c.pid = p.pid;
++---------+-----------+----------+-----------+
+| cname   | address   | pname    | price     |
++---------+-----------+----------+-----------+
+| Akash   | Chennai   | KTM      | 215999.99 |
+| Sanjay  | Madurai   | rs200    | 159000.00 |
+| Vignesh | Kangeyum  | rx100    |  75999.99 |
+| James   | Chennai   | TVS 50   |  15999.99 |
+| Ashok   | Karaikudi | Splendor |  80000.00 |
++---------+-----------+----------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> create table bill_det(bid int primary key auto_increment,pid int,cid varchar(10),bdate date, total_amt double(10,2), foreign key(pid) references product_det(pid),foreign key(cid) references cust_det(cid));
+Query OK, 0 rows affected, 1 warning (4.79 sec)
+
+mysql> desc bill_det;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| bid       | int          | NO   | PRI | NULL    | auto_increment |
+| pid       | int          | YES  | MUL | NULL    |                |
+| cid       | varchar(10)  | YES  | MUL | NULL    |                |
+| bdate     | date         | YES  |     | NULL    |                |
+| total_amt | double(10,2) | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+5 rows in set (0.03 sec)
+
+mysql> alter table bill_det auto_increment=1100203;
+Query OK, 0 rows affected (0.53 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into bill_det(pid,cid,bdate,total_amt)values(154,'c001','2023-11-18',217999.99);
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into bill_det(pid,cid,bdate,total_amt)values(202,'c002','2023-10-08',161999.99);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select * from bill_det;
++---------+------+------+------------+-----------+
+| bid     | pid  | cid  | bdate      | total_amt |
++---------+------+------+------------+-----------+
+| 1100203 |  154 | c001 | 2023-11-18 | 217999.99 |
+| 1100204 |  202 | c002 | 2023-10-08 | 161999.99 |
++---------+------+------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.10 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.04 sec)
+
+mysql> select b.bdate,c.cname,c.address,p.pname,b.total_amt from cust_det as c inner join product_det as p on c.pid = p.pid inner join bill_det as b on p.pid = b.pid;
++------------+--------+---------+-------+-----------+
+| bdate      | cname  | address | pname | total_amt |
++------------+--------+---------+-------+-----------+
+| 2023-11-18 | Akash  | Chennai | KTM   | 217999.99 |
+| 2023-10-08 | Sanjay | Madurai | rs200 | 161999.99 |
++------------+--------+---------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select b.bid,b.bdate,c.cname,c.address,p.pname,b.total_amt from cust_det as c inner join product_det as p on c.pid = p.pid inner join bill_det as b on p.pid = b.pid;
++---------+------------+--------+---------+-------+-----------+
+| bid     | bdate      | cname  | address | pname | total_amt |
++---------+------------+--------+---------+-------+-----------+
+| 1100203 | 2023-11-18 | Akash  | Chennai | KTM   | 217999.99 |
+| 1100204 | 2023-10-08 | Sanjay | Madurai | rs200 | 161999.99 |
++---------+------------+--------+---------+-------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select c.cname,c.address, p.pname,p.price from cust_det as c right join product_det as p on c.pid = p.pid;
++---------+-----------+---------------+-----------+
+| cname   | address   | pname         | price     |
++---------+-----------+---------------+-----------+
+| Akash   | Chennai   | KTM           | 215999.99 |
+| NULL    | NULL      | Pulsar150     | 115999.99 |
+| NULL    | NULL      | unicorn       |  95000.00 |
+| Ashok   | Karaikudi | Splendor      |  80000.00 |
+| Vignesh | Kangeyum  | rx100         |  75999.99 |
+| Sanjay  | Madurai   | rs200         | 159000.00 |
+| NULL    | NULL      | Royal enfield | 200000.00 |
+| NULL    | NULL      | FX            | 160000.00 |
+| NULL    | NULL      | BMW           | 159000.00 |
+| James   | Chennai   | TVS 50        |  15999.99 |
++---------+-----------+---------------+-----------+
+10 rows in set (0.03 sec)
+
+mysql> select c.cname,c.address, b.bid,b.total_amt from cust_det as c left join bill_det as b on c.pid = b.pid;
++---------+-----------+---------+-----------+
+| cname   | address   | bid     | total_amt |
++---------+-----------+---------+-----------+
+| Akash   | Chennai   | 1100203 | 217999.99 |
+| Sanjay  | Madurai   | 1100204 | 161999.99 |
+| Vignesh | Kangeyum  |    NULL |      NULL |
+| James   | Chennai   |    NULL |      NULL |
+| Ashok   | Karaikudi |    NULL |      NULL |
++---------+-----------+---------+-----------+
+5 rows in set (0.11 sec)
+
+mysql> create table project_guide(studid int,sname varchar(25),guideid int);
+Query OK, 0 rows affected (2.73 sec)
+
+mysql> insert into project_guide values(1,'Ashok',NULL),(2,'Ashif',Null),(3,'Mani',1),(4,'Meiarasu',2),(5,'Santhosh',1);
+Query OK, 5 rows affected (0.54 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> select * from project_guide;
++--------+----------+---------+
+| studid | sname    | guideid |
++--------+----------+---------+
+|      1 | Ashok    |    NULL |
+|      2 | Ashif    |    NULL |
+|      3 | Mani     |       1 |
+|      4 | Meiarasu |       2 |
+|      5 | Santhosh |       1 |
++--------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select s.sname as StudentName, g.sname as GuideName from project_guide s join project_guide g on g.studid = s.guideid;
++-------------+-----------+
+| StudentName | GuideName |
++-------------+-----------+
+| Santhosh    | Ashok     |
+| Mani        | Ashok     |
+| Meiarasu    | Ashif     |
++-------------+-----------+
+3 rows in set (0.02 sec)
+
+mysql> select * from product_det;
++------+---------------+-----------+
+| pid  | pname         | price     |
++------+---------------+-----------+
+|  154 | KTM           | 215999.99 |
+|  155 | Pulsar150     | 115999.99 |
+|  159 | unicorn       |  95000.00 |
+|  199 | Splendor      |  80000.00 |
+|  201 | rx100         |  75999.99 |
+|  202 | rs200         | 159000.00 |
+|  254 | Royal enfield | 200000.00 |
+| 1502 | FX            | 160000.00 |
+| 1582 | BMW           | 159000.00 |
+| 1789 | TVS 50        |  15999.99 |
++------+---------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from cust_det;
++------+---------+-----------+------+
+| cid  | cname   | address   | pid  |
++------+---------+-----------+------+
+| c001 | Akash   | Chennai   |  154 |
+| c002 | Sanjay  | Madurai   |  202 |
+| c003 | Vignesh | Kangeyum  |  201 |
+| c007 | James   | Chennai   | 1789 |
+| c111 | Ashok   | Karaikudi |  199 |
++------+---------+-----------+------+
+5 rows in set (0.00 sec)
+
+mysql> select c.cname,c.address,p.pname,p.price from cust_det c CROSS JOIN product_det p;
++---------+-----------+---------------+-----------+
+| cname   | address   | pname         | price     |
++---------+-----------+---------------+-----------+
+| Ashok   | Karaikudi | KTM           | 215999.99 |
+| James   | Chennai   | KTM           | 215999.99 |
+| Vignesh | Kangeyum  | KTM           | 215999.99 |
+| Sanjay  | Madurai   | KTM           | 215999.99 |
+| Akash   | Chennai   | KTM           | 215999.99 |
+| Ashok   | Karaikudi | Pulsar150     | 115999.99 |
+| James   | Chennai   | Pulsar150     | 115999.99 |
+| Vignesh | Kangeyum  | Pulsar150     | 115999.99 |
+| Sanjay  | Madurai   | Pulsar150     | 115999.99 |
+| Akash   | Chennai   | Pulsar150     | 115999.99 |
+| Ashok   | Karaikudi | unicorn       |  95000.00 |
+| James   | Chennai   | unicorn       |  95000.00 |
+| Vignesh | Kangeyum  | unicorn       |  95000.00 |
+| Sanjay  | Madurai   | unicorn       |  95000.00 |
+| Akash   | Chennai   | unicorn       |  95000.00 |
+| Ashok   | Karaikudi | Splendor      |  80000.00 |
+| James   | Chennai   | Splendor      |  80000.00 |
+| Vignesh | Kangeyum  | Splendor      |  80000.00 |
+| Sanjay  | Madurai   | Splendor      |  80000.00 |
+| Akash   | Chennai   | Splendor      |  80000.00 |
+| Ashok   | Karaikudi | rx100         |  75999.99 |
+| James   | Chennai   | rx100         |  75999.99 |
+| Vignesh | Kangeyum  | rx100         |  75999.99 |
+| Sanjay  | Madurai   | rx100         |  75999.99 |
+| Akash   | Chennai   | rx100         |  75999.99 |
+| Ashok   | Karaikudi | rs200         | 159000.00 |
+| James   | Chennai   | rs200         | 159000.00 |
+| Vignesh | Kangeyum  | rs200         | 159000.00 |
+| Sanjay  | Madurai   | rs200         | 159000.00 |
+| Akash   | Chennai   | rs200         | 159000.00 |
+| Ashok   | Karaikudi | Royal enfield | 200000.00 |
+| James   | Chennai   | Royal enfield | 200000.00 |
+| Vignesh | Kangeyum  | Royal enfield | 200000.00 |
+| Sanjay  | Madurai   | Royal enfield | 200000.00 |
+| Akash   | Chennai   | Royal enfield | 200000.00 |
+| Ashok   | Karaikudi | FX            | 160000.00 |
+| James   | Chennai   | FX            | 160000.00 |
+| Vignesh | Kangeyum  | FX            | 160000.00 |
+| Sanjay  | Madurai   | FX            | 160000.00 |
+| Akash   | Chennai   | FX            | 160000.00 |
+| Ashok   | Karaikudi | BMW           | 159000.00 |
+| James   | Chennai   | BMW           | 159000.00 |
+| Vignesh | Kangeyum  | BMW           | 159000.00 |
+| Sanjay  | Madurai   | BMW           | 159000.00 |
+| Akash   | Chennai   | BMW           | 159000.00 |
+| Ashok   | Karaikudi | TVS 50        |  15999.99 |
+| James   | Chennai   | TVS 50        |  15999.99 |
+| Vignesh | Kangeyum  | TVS 50        |  15999.99 |
+| Sanjay  | Madurai   | TVS 50        |  15999.99 |
+| Akash   | Chennai   | TVS 50        |  15999.99 |
++---------+-----------+---------------+-----------+
+50 rows in set (0.29 sec)
+

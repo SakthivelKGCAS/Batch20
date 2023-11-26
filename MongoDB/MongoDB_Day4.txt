@@ -1,0 +1,578 @@
+Day 4:25/11/2023
+--------------------------------
+
+bb2> db.EmployeeDetails.find().pretty()
+[emo_Array
+  {loyeeDetails
+    _id: ObjectId("65607e14afbf47d442295dec"),
+    empno: 1023,
+    empname: 'Mejo',
+    gender: 'Male',
+    salary: 27000.5,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607e14afbf47d442295ded"),
+    empno: 166,
+    empname: 'Jeeva',
+    gender: 'Male',
+    salary: 180000,
+    department: { deptname: 'HR' }
+  },
+bb2> db.EmployeeDetails.deleteOne({gender:"Male"})
+    _id: ObjectId("65607e14afbf47d442295dee"),
+    empno: 502,
+    empname: 'Harini',
+    gender: 'Female',
+    salary: 18550,
+    department: { deptname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295def"),
+    empno: 1024,
+    empname: 'Sandy',
+    gender: 'Male',
+    salary: 36000,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295df0"),
+    empno: 167,
+    empname: 'Tamanna',
+    gender: 'Female',
+    salary: 47000,
+    department: { deptname: 'HR' }
+  },
+  {
+    _id: ObjectId("65607e7fafbf47d442295df1"),
+    empno: 503,
+    empname: 'Samantha',
+    gender: 'Female',
+    salary: 12550,
+    department: { deptname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df2"),
+    empno: 1025,
+    empname: 'John',
+    salary: 35500.5,
+    department: { deptname: 'Sales' },
+    gender: 'Male'
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df3"),
+    empno: 10258,
+    empname: 'Allen',
+    gender: 'Male',
+    salary: 23000,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607eceafbf47d442295df4"),
+    empno: 504,
+    empname: 'Karthika',
+    gender: 'Female',
+    salary: 13550,
+    department: { deptname: 'Admin' }
+  },
+  {
+    _id: ObjectId("65607efaafbf47d442295df5"),
+    empno: 1026,
+    empname: 'Harish',
+    gender: 'Male',
+    salary: 25500.5,
+    department: { deptname: 'Sales' }
+  },
+  {
+    _id: ObjectId("65607efaafbf47d442295df6"),
+    empno: 10259,
+    empname: 'Manikandan',
+    gender: 'Male',
+    salary: 24000,
+    department: { deptname: 'Marketing' }
+  },
+  {
+    _id: ObjectId("65609e1aa44c0d5e11aa61f1"),
+    empname: 'Subramaniam',
+    department: { deptname: 'Marketing' },
+    empno: 12899,
+    gender: 'Male',
+    salary: 30000
+  }
+]
+bb2> db.EmployeeDetails.find().pretty().count()
+12
+
+Delete
+------------------
+bb2> db.EmployeeDetails.deleteOne({gender:"Male"})
+{ acknowledged: true, deletedCount: 1 }
+
+bb2> db.EmployeeDetails.find({},{_id:0,empname:1,gender:1})
+[
+  { empname: 'Jeeva', gender: 'Male' },
+  { empname: 'Harini', gender: 'Female' },
+  { empname: 'Sandy', gender: 'Male' },
+  { empname: 'Tamanna', gender: 'Female' },
+  { empname: 'Samantha', gender: 'Female' },
+  { empname: 'John', gender: 'Male' },
+  { empname: 'Allen', gender: 'Male' },
+  { empname: 'Karthika', gender: 'Female' },
+  { empname: 'Harish', gender: 'Male' },
+  { empname: 'Manikandan', gender: 'Male' },
+  { empname: 'Subramaniam', gender: 'Male' }
+]
+
+deleteMany()
+---------------------
+bb2> db.EmployeeDetails.deleteMany({gender:"Female"})
+
+{ acknowledged: true, deletedCount: 4 }
+
+
+bb2> db.EmployeeDetails.find({},{_id:0,empname:1,gender:1})
+[
+  { empname: 'Jeeva', gender: 'Male' },
+  { empname: 'Sandy', gender: 'Male' },
+  { empname: 'John', gender: 'Male' },
+  { empname: 'Allen', gender: 'Male' },
+  { empname: 'Harish', gender: 'Male' },
+  { empname: 'Manikandan', gender: 'Male' },
+  { empname: 'Subramaniam', gender: 'Male' }
+]
+
+
+To Delete all the documents
+-----------------------------------------------
+
+bb2> db.Demo_Array.deleteMany({})
+
+
+bb2> show collections
+Demo_Array
+EmployeeDetails
+Student_info
+
+
+To remove single document from collection similiar as deleteOne()
+--------------------------------------------------------------------------------------
+
+bb2> db.Student_info.remove({Name:"Chandru"})
+
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 1 }
+
+
+
+bb2> db.Student_info.find()
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    Rollno: 1025,
+    Name: 'Arun',
+    Course: 'FS',
+    m1: 40,
+    m2: 60,
+    m3: 77,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 23,
+      email: 'ar@gmail.com',
+      DOB: ISODate("1999-02-15T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    Rollno: 1026,
+    Name: 'Balaji',
+    Course: 'FS',
+    m1: 50,
+    m2: 66,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'bal@gmail.com',
+      DOB: ISODate("1999-03-25T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    Rollno: 1028,
+    Name: 'Deva',
+    Course: 'FS',
+    m1: 12,
+    m2: 9,
+    m3: 37,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'dev@gmail.com',
+      DOB: ISODate("1999-10-10T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    Rollno: 1029,
+    Name: 'Elango',
+    Course: 'WD',
+    m1: 97,
+    m2: 100,
+    m3: 90,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: {
+      age: 21,
+      email: 'el@gmail.com',
+      DOB: ISODate("2000-09-27T00:00:00.000Z")
+    },
+    college_name: 'KGM'
+  }
+]
+
+
+Working Dates:
+-------------------------------
+$currentDate
+-------------------
+bb2> db.Student_info.updateMany( {}, {$currentDate:{DateOfJoin:true}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 4,
+  modifiedCount: 4,
+  upsertedCount: 0
+}
+
+bb2> db.Student_info.find()
+[
+  {cknowledged: true,
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    Rollno: 1025,,
+    Name: 'Arun',4,
+    Course: 'FS',0
+    m1: 40,
+    m2: 60,
+    m3: 77,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 23,
+      email: 'ar@gmail.com',
+      DOB: ISODate("1999-02-15T00:00:00.000Z")
+    },
+    college_name: 'KGM',
+    DateOfJoin: ISODate("2023-11-25T12:24:00.539Z")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    Rollno: 1026,
+    Name: 'Balaji',
+    Course: 'FS',
+    m1: 50,
+    m2: 66,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'bal@gmail.com',
+      DOB: ISODate("1999-03-25T00:00:00.000Z")
+    },
+    college_name: 'KGM',
+    DateOfJoin: ISODate("2023-11-25T12:24:00.540Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    Rollno: 1028,
+    Name: 'Deva',
+    Course: 'FS',
+    m1: 12,
+    m2: 9,
+    m3: 37,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'dev@gmail.com',
+      DOB: ISODate("1999-10-10T00:00:00.000Z")
+    },
+    college_name: 'KGM',
+    DateOfJoin: ISODate("2023-11-25T12:24:00.540Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    Rollno: 1029,
+    Name: 'Elango',
+    Course: 'WD',
+    m1: 97,
+    m2: 100,
+    m3: 90,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: {
+      age: 21,
+      email: 'el@gmail.com',
+      DOB: ISODate("2000-09-27T00:00:00.000Z")
+    },
+    college_name: 'KGM',
+    DateOfJoin: ISODate("2023-11-25T12:24:00.540Z")
+  }
+]
+
+
+$dateToString
+--------------------
+bb2> db.Student_info.aggregate([   {$project:{NewDate:{$dateToString:
+{format:"%Y-%m-%d",date:"$DateOfJoin"} }}} ])
+
+
+[
+  { _id: ObjectId("655df96ecf3771eb92af9db7"), NewDate: '2023-11-25' },
+  { _id: ObjectId("655dfb26cf3771eb92af9db8"), NewDate: '2023-11-25' },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dba"), NewDate: '2023-11-25' },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dbb"), NewDate: '2023-11-25' }
+]
+
+$dateFromParts
+------------------------
+
+bb2> db.Student_info.aggregate([   {$project:{date:{$dateFromParts:
+{year:2002,month:3,day:25,hour:8,minute:20,second:40,millisecond:20}}}} ])
+
+
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    date: ISODate("2002-03-25T08:20:40.020Z")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    date: ISODate("2002-03-25T08:20:40.020Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    date: ISODate("2002-03-25T08:20:40.020Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    date: ISODate("2002-03-25T08:20:40.020Z")
+  }
+]
+
+dateDiff:
+------------------
+bb2> db.Student_info.aggregate([  {$project:{DayDifference:{$dateDiff:
+{startDate:new Date("2000-08-05"),endDate:new Date("2023-11-25"),unit:"day"}}}} ])
+
+
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    DayDifference: Long("8512")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    DayDifference: Long("8512")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    DayDifference: Long("8512")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    DayDifference: Long("8512")
+  }
+]
+bb2> db.Student_info.aggregate([  {$project:{DayDifference:{$dateDiff:{startDate:new Date("2000-08-05"),endDate:new Date("2023-11-25"),unit:"year"}}}} ])
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    DayDifference: Long("23")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    DayDifference: Long("23")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    DayDifference: Long("23")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    DayDifference: Long("23")
+  }
+]
+bb2> db.Student_info.aggregate([  {$project:{DayDifference:{$dateDiff:{startDate:new Date("2000-08-05"),endDate:new Date("2023-11-25"),unit:"week"}}}} ])
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    DayDifference: Long("1216")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    DayDifference: Long("1216")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    DayDifference: Long("1216")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    DayDifference: Long("1216")
+  }
+]
+
+
+
+bb2> db.Student_info.aggregate([  {$project:{DayDifference:{$dateDiff:
+{startDate:new Date("2000-08-05"),endDate:new Date("2023-11-25"),unit:"month"}}}} ])
+
+
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    DayDifference: Long("279")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    DayDifference: Long("279")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    DayDifference: Long("279")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    DayDifference: Long("279")
+  }
+]
+
+$dateAdd
+---------------
+
+bb2> db.Student_info.aggregate([   {$project:{futureDate:{$dateAdd:
+{startDate: new Date("2002-03-25"),unit:"day", amount:400000}}}} ])
+
+
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    futureDate: ISODate("3097-05-23T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    futureDate: ISODate("3097-05-23T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    futureDate: ISODate("3097-05-23T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    futureDate: ISODate("3097-05-23T00:00:00.000Z")
+  }
+]
+
+
+bb2> db.Student_info.aggregate([   {$project:{futureDate:{$dateAdd:
+{startDate: new Date("2002-03-25"),unit:"year", amount:80}}}} ])
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    futureDate: ISODate("2082-03-25T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    futureDate: ISODate("2082-03-25T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    futureDate: ISODate("2082-03-25T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    futureDate: ISODate("2082-03-25T00:00:00.000Z")
+  }
+]
+
+bb2> db.Student_info.aggregate([   {$project:{futureDate:{$dateAdd:
+{startDate: new Date("2002-03-25"),unit:"month", amount:2000}}}} ])
+[
+  {
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    futureDate: ISODate("2168-11-25T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    futureDate: ISODate("2168-11-25T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    futureDate: ISODate("2168-11-25T00:00:00.000Z")
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dbb"),
+    futureDate: ISODate("2168-11-25T00:00:00.000Z")
+  }
+]
+bb2>
+
+dayOfMonth
+------------------------
+bb2> db.Student_info.aggregate([ {$project:{dayofmonth:{$dayOfMonth:"$DateOfJoin"}}} ])
+[
+  { _id: ObjectId("655df96ecf3771eb92af9db7"), dayofmonth: 25 },
+  { _id: ObjectId("655dfb26cf3771eb92af9db8"), dayofmonth: 25 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dba"), dayofmonth: 25 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dbb"), dayofmonth: 25 }
+]
+
+
+dayOfYear
+--------------
+bb2> db.Student_info.aggregate([ {$project:{dayofmonth:{$dayOfYear:"$DateOfJoin"}}} ])
+[
+  { _id: ObjectId("655df96ecf3771eb92af9db7"), dayofmonth: 329 },
+  { _id: ObjectId("655dfb26cf3771eb92af9db8"), dayofmonth: 329 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dba"), dayofmonth: 329 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dbb"), dayofmonth: 329 }
+]
+
+year
+------------
+bb2> db.Student_info.aggregate([ {$project:{dayofmonth:{$year:"$DateOfJoin"}}} ])
+[
+  { _id: ObjectId("655df96ecf3771eb92af9db7"), dayofmonth: 2023 },
+  { _id: ObjectId("655dfb26cf3771eb92af9db8"), dayofmonth: 2023 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dba"), dayofmonth: 2023 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dbb"), dayofmonth: 2023 }
+]
+
+month
+-----------------
+bb2> db.Student_info.aggregate([ {$project:{dayofmonth:{$month:"$DateOfJoin"}}} ])
+[
+  { _id: ObjectId("655df96ecf3771eb92af9db7"), dayofmonth: 11 },
+  { _id: ObjectId("655dfb26cf3771eb92af9db8"), dayofmonth: 11 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dba"), dayofmonth: 11 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dbb"), dayofmonth: 11 }
+]
+
+week
+---------------
+bb2> db.Student_info.aggregate([ {$project:{dayofmonth:{$week:"$DateOfJoin"}}} ])
+[
+  { _id: ObjectId("655df96ecf3771eb92af9db7"), dayofmonth: 47 },
+  { _id: ObjectId("655dfb26cf3771eb92af9db8"), dayofmonth: 47 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dba"), dayofmonth: 47 },
+  { _id: ObjectId("655dfc0ecf3771eb92af9dbb"), dayofmonth: 47 }
+]
+
+
+
+
+
+
+
+
+
+

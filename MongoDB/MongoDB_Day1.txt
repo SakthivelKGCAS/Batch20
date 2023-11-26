@@ -1,0 +1,384 @@
+test> show dbs
+
+BB             40.00 KiB
+BlrBatch1     152.00 KiB
+BlrBatch2      72.00 KiB
+ChennaiB2      72.00 KiB
+Demo_Today     72.00 KiB
+EComm         144.00 KiB
+Employee       72.00 KiB
+Kgm_B15        72.00 KiB
+MCAIIM         72.00 KiB
+PVT_Employee  128.00 KiB
+Showroom       72.00 KiB
+Student        72.00 KiB
+admin          40.00 KiB
+batch17       200.00 KiB
+config         84.00 KiB
+kgm           144.00 KiB
+kgmchnb2      224.00 KiB
+local          88.00 KiB
+thrissurdb    284.00 KiB
+ticket_db       8.00 KiB
+
+test> use batch20;
+
+batch20>
+switched to db batch20
+
+
+Create a new collection
+--------------------------
+
+batch20> db.createCollection("Student_info");
+{ ok: 1 }
+
+
+batch20> show collections;
+Student_info
+
+batch20> db.createCollection("Dept");
+{ ok: 1 }
+batch20> db.createCollection("Course");
+{ ok: 1 }
+batch20> show collections;
+Course
+Dept
+Student_info
+
+Remove Collection
+---------------------------------
+batch20> db.Course.drop();
+true
+
+
+batch20> show collections;
+Dept
+Student_info
+
+
+Remove Database
+--------------------------
+
+batch20> db.dropDatabase();
+{ ok: 1, dropped: 'batch20' }
+
+
+batch20> show dbs
+BB             40.00 KiB
+BlrBatch1     152.00 KiB
+BlrBatch2      72.00 KiB
+ChennaiB2      72.00 KiB
+Demo_Today     72.00 KiB
+EComm         144.00 KiB
+Employee       72.00 KiB
+Kgm_B15        72.00 KiB
+batch20>
+PVT_Employee  128.00 KiB
+Showroom       72.00 KiB
+Student        72.00 KiB
+admin          40.00 KiB
+batch17       200.00 KiB
+config         96.00 KiB
+kgm           144.00 KiB
+kgmchnb2      224.00 KiB
+local          88.00 KiB
+thrissurdb    284.00 KiB
+ticket_db       8.00 KiB
+
+bb2> show dbs;
+BB             40.00 KiB
+BlrBatch1     152.00 KiB
+BlrBatch2      72.00 KiB
+ChennaiB2      72.00 KiB
+Demo_Today     72.00 KiB
+EComm         144.00 KiB
+Employee       72.00 KiB
+Kgm_B15        72.00 KiB
+MCAIIM         72.00 KiB
+PVT_Employee  128.00 KiB
+Showroom       72.00 KiB
+Student        72.00 KiB
+admin          40.00 KiB
+batch17       200.00 KiB
+config         96.00 KiB
+kgm           144.00 KiB
+kgmchnb2      224.00 KiB
+local          88.00 KiB
+thrissurdb    284.00 KiB
+ticket_db       8.00 KiB
+
+
+Insert Single Document:
+--------------------------------------
+bb2> db.Student_info.insertOne( {
+"Rollno":1025, "Name":"Arun","Course":"FS","m1":40,"m2":60,"m3":77, 
+"Subjects":["HTML","CSS","MongoDB"], 
+"Personal_details":{"age":22,"email":"ar@gmail.com","DOB":new Date("1999-02-15")}
+});
+
+
+>db.Student_info.find();
+{
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    Rollno: 1025,gmail.com',
+    Name: 'Arun',e("1999-02-15T00:00:00.000Z")
+    Course: 'FS',
+    m1: 40,
+    m2: 60,
+    m3: 77,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 22,
+      email: 'ar@gmail.com',
+      DOB: ISODate("1999-02-15T00:00:00.000Z")
+    }
+  }
+
+
+
+bb2> db.Student_info.insert( 
+[
+{
+"Rollno":1026, 
+"Name":"Balaji",
+"Course":"FS",
+"m1":50,
+"m2":66,
+"m3":87,
+ "Subjects":["HTML","CSS","MongoDB"],
+ "Personal_details":{
+"age":21,"email":"bal@gmail.com","DOB":new Date("1999-03-25")
+}
+}, 
+
+{
+"Rollno":1027,
+"Name":"Chandru",
+"Course":"WD",
+"m1":70,
+"m2":88,
+"m3":92, 
+"Subjects":["HTML","CSS","JS"],
+"Personal_details":{
+"age":20,"email":"chand@gmail.com","DOB":new Date("2000-12-01")}
+} 
+
+]
+);
+
+ db.Student_info.insertMany( [
+{
+"Rollno":1028, 
+"Name":"Deva",
+"Course":"FS",
+"m1":12,
+"m2":9,
+"m3":37, 
+"Subjects":["HTML","CSS","MongoDB"],
+ "Personal_details":{"age":21,"email":"dev@gmail.com","DOB":new Date("1999-10-10")}
+}, 
+
+{
+"Rollno":1029,
+"Name":"Elango",
+"Course":"WD",
+"m1":97,
+"m2":100,
+"m3":90, 
+"Subjects":["HTML","CSS","JS"],
+"Personal_details":{"age":21,"email":"el@gmail.com","DOB":new Date("2000-09-27")}
+} 
+]);
+
+
+Data Retrieval
+------------------------------
+
+bb2> db.Student_info.findOne();
+{
+  _id: ObjectId("655df96ecf3771eb92af9db7"),
+  Rollno: 1025,
+  Name: 'Arun',
+  Course: 'FS',
+  m1: 40,
+  m2: 60,
+  m3: 77,
+  Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+  Personal_details: {
+    age: 22,
+    email: 'ar@gmail.com',
+    DOB: ISODate("1999-02-15T00:00:00.000Z")
+  }
+}
+
+
+Query
+--------------
+Single Document Retrieval:
+----------------------------------------
+
+
+bb2> db.Student_info.findOne();
+{
+  _id: ObjectId("655df96ecf3771eb92af9db7"),
+  Rollno: 1025,
+  Name: 'Arun',
+  Course: 'FS',
+  m1: 40,
+  m2: 60,
+  m3: 77,
+  Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+  Personal_details: {
+    age: 22,
+    email: 'ar@gmail.com',
+    DOB: ISODate("1999-02-15T00:00:00.000Z")
+  }
+}
+
+
+Multiple Documents Retrieval:
+----------------------------------------
+bb2> db.Student_info.find({"Course":"FS"})
+[
+  {id: ObjectId("655df96ecf3771eb92af9db7"),
+    _id: ObjectId("655df96ecf3771eb92af9db7"),
+    Rollno: 1025,
+    Name: 'Arun',
+    Course: 'FS',
+    m1: 40,
+    m2: 60,
+    m3: 77, [ 'HTML', 'CSS', 'MongoDB' ],
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 22,@gmail.com',
+      email: 'ar@gmail.com',T00:00:00.000Z")
+      DOB: ISODate("1999-02-15T00:00:00.000Z")
+    }
+  },
+  {
+    _id: ObjectId("655dfb26cf3771eb92af9db8"),
+    Rollno: 1026,
+    Name: 'Balaji',
+    Course: 'FS',
+    m1: 50,
+    m2: 66,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'bal@gmail.com',
+      DOB: ISODate("1999-03-25T00:00:00.000Z")
+    }
+  },
+  {
+    _id: ObjectId("655dfc0ecf3771eb92af9dba"),
+    Rollno: 1028,
+    Name: 'Deva',
+    Course: 'FS',
+    m1: 12,
+    m2: 9,
+    m3: 37,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: {
+      age: 21,
+      email: 'dev@gmail.com',
+      DOB: ISODate("1999-10-10T00:00:00.000Z")
+    }
+  }
+]
+
+Query & Projection
+----------------
+
+bb2> db.Student_info.find({"Course":"FS"},{_id:0,Name:1,Course:1})
+[
+  { Name: 'Arun', Course: 'FS' },
+  { Name: 'Balaji', Course: 'FS' },
+  { Name: 'Deva', Course: 'FS' }
+]
+
+
+bb2> db.Student_info.find({},{_id:0,Name:1,Course:1,m1:1,m2:1,m3:1,Subjects:1,"Personal_details.age":1})
+[
+  {
+    Name: 'Arun',
+    Course: 'FS',
+    m1: 40,
+    m2: 60,
+    m3: 77,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: { age: 22 }
+  },
+  {
+    Name: 'Balaji',
+    Course: 'FS',
+    m1: 50,
+    m2: 66,
+    m3: 87,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: { age: 21 }
+  },
+  {
+    Name: 'Chandru',
+    Course: 'WD',
+    m1: 70,
+    m2: 88,
+    m3: 92,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: { age: 20 }
+  },
+  {
+    Name: 'Deva',
+    Course: 'FS',
+    m1: 12,
+    m2: 9,
+    m3: 37,
+    Subjects: [ 'HTML', 'CSS', 'MongoDB' ],
+    Personal_details: { age: 21 }
+  },
+  {
+    Name: 'Elango',
+    Course: 'WD',
+    m1: 97,
+    m2: 100,
+    m3: 90,
+    Subjects: [ 'HTML', 'CSS', 'JS' ],
+    Personal_details: { age: 21 }
+  }
+]
+
+bb2> db.Student_info.find( {}, {_id:0,Name:1,"Personal_details.age":1,"Personal_details.DOB":1})
+[
+  {
+    Name: 'Arun',
+    Personal_details: { age: 22, DOB: ISODate("1999-02-15T00:00:00.000Z") }
+  },
+  {
+    Name: 'Balaji',
+    Personal_details: { age: 21, DOB: ISODate("1999-03-25T00:00:00.000Z") }
+  },
+  {
+    Name: 'Chandru',
+    Personal_details: { age: 20, DOB: ISODate("2000-12-01T00:00:00.000Z") }
+  },
+  {
+    Name: 'Deva',
+    Personal_details: { age: 21, DOB: ISODate("1999-10-10T00:00:00.000Z") }
+  },
+  {
+    Name: 'Elango',
+    Personal_details: { age: 21, DOB: ISODate("2000-09-27T00:00:00.000Z") }
+  }
+]
+
+
+
+
+
+
+
+
+
+
+

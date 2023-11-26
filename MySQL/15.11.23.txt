@@ -1,0 +1,1052 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| amazon_product     |
+| batch14            |
+| batch15            |
+| batch17            |
+| batch20            |
+| blrdb              |
+| bookdb             |
+| cbebatch17         |
+| chnbatch2          |
+| demo_blr           |
+| demo_thrissurdb    |
+| demochennai        |
+| emp_det            |
+| employee           |
+| information_schema |
+| kgm                |
+| login_page         |
+| login_page1        |
+| mysql              |
+| performance_schema |
+| productdb          |
+| sakila             |
+| student_db         |
+| student_det        |
+| student_management |
+| sys                |
+| testdb             |
+| thrissurdb         |
+| ticket             |
+| user_manage        |
+| user_management    |
+| userdb             |
+| usermanage         |
+| workbench          |
+| world              |
++--------------------+
+35 rows in set (0.96 sec)
+
+mysql> use batch20;
+Database changed
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| demo              |
+| student_det       |
++-------------------+
+2 rows in set (0.31 sec)
+
+mysql> create table stu_mark(rollno int,name varchar(20),m1 int,m2 int,m3 int);
+Query OK, 0 rows affected (1.92 sec)
+
+mysql> desc stu_mark;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int         | YES  |     | NULL    |       |
+| name   | varchar(20) | YES  |     | NULL    |       |
+| m1     | int         | YES  |     | NULL    |       |
+| m2     | int         | YES  |     | NULL    |       |
+| m3     | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.09 sec)
+
+mysql> insert into stu_mark values(101,'Arun',60,65,68),(102,'Bala',25,40,42),(103,'Daniel',70,75,87),(104,'Divya',87,90,87);
+Query OK, 4 rows affected (0.14 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into stu_mark values(106,'John',6,12,13),(108,'Sam',98,90,95),(109,'Vignesh',78,79,87),(121,'Sandy',67,50,47);
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from stu_mark;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    102 | Bala    |   25 |   40 |   42 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+8 rows in set (0.03 sec)
+
+mysql> select * from stu_mark where rollno = 121;
++--------+-------+------+------+------+
+| rollno | name  | m1   | m2   | m3   |
++--------+-------+------+------+------+
+|    121 | Sandy |   67 |   50 |   47 |
++--------+-------+------+------+------+
+1 row in set (0.03 sec)
+
+mysql> select name,m1 from stu_mark where m1<40;
++------+------+
+| name | m1   |
++------+------+
+| Bala |   25 |
+| John |    6 |
++------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from stu_mark where m1>=90;
++--------+------+------+------+------+
+| rollno | name | m1   | m2   | m3   |
++--------+------+------+------+------+
+|    108 | Sam  |   98 |   90 |   95 |
++--------+------+------+------+------+
+1 row in set (0.04 sec)
+
+mysql> select name,m1 from stu_mark where m1>=90;
++------+------+
+| name | m1   |
++------+------+
+| Sam  |   98 |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> select name,m1 from stu_mark where m1>=60;
++---------+------+
+| name    | m1   |
++---------+------+
+| Arun    |   60 |
+| Daniel  |   70 |
+| Divya   |   87 |
+| Sam     |   98 |
+| Vignesh |   78 |
+| Sandy   |   67 |
++---------+------+
+6 rows in set (0.00 sec)
+
+mysql> select name,m1 from stu_mark where m1<>60;
++---------+------+
+| name    | m1   |
++---------+------+
+| Bala    |   25 |
+| Daniel  |   70 |
+| Divya   |   87 |
+| John    |    6 |
+| Sam     |   98 |
+| Vignesh |   78 |
+| Sandy   |   67 |
++---------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from stu_mark;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    102 | Bala    |   25 |   40 |   42 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from stu_mark where m1>=40 and m2>=40 and m3>=40;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+6 rows in set (0.00 sec)
+
+mysql> select * from stu_mark where m1<40 or m2<40 or m3<40;
++--------+------+------+------+------+
+| rollno | name | m1   | m2   | m3   |
++--------+------+------+------+------+
+|    102 | Bala |   25 |   40 |   42 |
+|    106 | John |    6 |   12 |   13 |
++--------+------+------+------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from stu_mark where not name = 'Bala';
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> select * from stu_mark where name = 'Bala';
++--------+------+------+------+------+
+| rollno | name | m1   | m2   | m3   |
++--------+------+------+------+------+
+|    102 | Bala |   25 |   40 |   42 |
++--------+------+------+------+------+
+1 row in set (0.00 sec)
+
+mysql> create table prod_det(pid varchar(10),pname varchar(25),price double(10,2));
+Query OK, 0 rows affected, 1 warning (0.47 sec)
+
+mysql> desc prod_det;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| pid   | varchar(10)  | YES  |     | NULL    |       |
+| pname | varchar(25)  | YES  |     | NULL    |       |
+| price | double(10,2) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into prod_det values('s22','samsung22',100000.00),('s23','samsung23',200000.00),('i14','iphone14',80000.99),('i15','iphone15',70999.99);
+Query OK, 4 rows affected (0.16 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into prod_det values('s24','samsungPro',150000.00),('op','oneplus',52000.00),('rm1','realme1',25000.99),('rm2','realme21',27999.99);
+Query OK, 4 rows affected (0.10 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> insert into prod_det values('ng21','nokiag21',18500.00),('nk11','nokia1100',2500.00),('rd','redme1',12500.99),('rd2','redme2',17999.99);
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod_det;
++------+------------+-----------+
+| pid  | pname      | price     |
++------+------------+-----------+
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
+| s24  | samsungPro | 150000.00 |
+| op   | oneplus    |  52000.00 |
+| rm1  | realme1    |  25000.99 |
+| rm2  | realme21   |  27999.99 |
+| ng21 | nokiag21   |  18500.00 |
+| nk11 | nokia1100  |   2500.00 |
+| rd   | redme1     |  12500.99 |
+| rd2  | redme2     |  17999.99 |
++------+------------+-----------+
+12 rows in set (0.00 sec)
+
+mysql> select * from prod_det where pname like 's%';
++------+------------+-----------+
+| pid  | pname      | price     |
++------+------------+-----------+
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| s24  | samsungPro | 150000.00 |
++------+------------+-----------+
+3 rows in set (0.07 sec)
+
+mysql> select * from prod_det where pname like 'r%';
++------+----------+----------+
+| pid  | pname    | price    |
++------+----------+----------+
+| rm1  | realme1  | 25000.99 |
+| rm2  | realme21 | 27999.99 |
+| rd   | redme1   | 12500.99 |
+| rd2  | redme2   | 17999.99 |
++------+----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from prod_det where pname like '%1';
++------+----------+----------+
+| pid  | pname    | price    |
++------+----------+----------+
+| rm1  | realme1  | 25000.99 |
+| rm2  | realme21 | 27999.99 |
+| ng21 | nokiag21 | 18500.00 |
+| rd   | redme1   | 12500.99 |
++------+----------+----------+
+4 rows in set (0.03 sec)
+
+mysql> select * from prod_det where pname like '%kia%';
++------+-----------+----------+
+| pid  | pname     | price    |
++------+-----------+----------+
+| ng21 | nokiag21  | 18500.00 |
+| nk11 | nokia1100 |  2500.00 |
++------+-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from prod_det where pname like '_ne%'
+    -> ;
++------+---------+----------+
+| pid  | pname   | price    |
++------+---------+----------+
+| op   | oneplus | 52000.00 |
++------+---------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from prod_det where pname like '___one%';
++------+----------+----------+
+| pid  | pname    | price    |
++------+----------+----------+
+| i14  | iphone14 | 80000.99 |
+| i15  | iphone15 | 70999.99 |
++------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from prod_det where not pname like 's%';
++------+-----------+----------+
+| pid  | pname     | price    |
++------+-----------+----------+
+| i14  | iphone14  | 80000.99 |
+| i15  | iphone15  | 70999.99 |
+| op   | oneplus   | 52000.00 |
+| rm1  | realme1   | 25000.99 |
+| rm2  | realme21  | 27999.99 |
+| ng21 | nokiag21  | 18500.00 |
+| nk11 | nokia1100 |  2500.00 |
+| rd   | redme1    | 12500.99 |
+| rd2  | redme2    | 17999.99 |
++------+-----------+----------+
+9 rows in set (0.03 sec)
+
+mysql> select * from prod_det;
++------+------------+-----------+
+| pid  | pname      | price     |
++------+------------+-----------+
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
+| s24  | samsungPro | 150000.00 |
+| op   | oneplus    |  52000.00 |
+| rm1  | realme1    |  25000.99 |
+| rm2  | realme21   |  27999.99 |
+| ng21 | nokiag21   |  18500.00 |
+| nk11 | nokia1100  |   2500.00 |
+| rd   | redme1     |  12500.99 |
+| rd2  | redme2     |  17999.99 |
++------+------------+-----------+
+12 rows in set (0.00 sec)
+
+mysql> select * from stu_mark;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    102 | Bala    |   25 |   40 |   42 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> select name,m3 from stu_mark where m3 in(10,20,30,40,50,60,70,80,90,100,87);
++---------+------+
+| name    | m3   |
++---------+------+
+| Daniel  |   87 |
+| Divya   |   87 |
+| Vignesh |   87 |
++---------+------+
+3 rows in set (0.00 sec)
+
+mysql> select name,m3 from stu_mark where m3 in(10,20,30,40,50,60,70,80,90,100);
+Empty set (0.03 sec)
+
+mysql> select name,m3 from stu_mark where not m3 in(10,20,30,40,50,60,70,80,90,100);
++---------+------+
+| name    | m3   |
++---------+------+
+| Arun    |   68 |
+| Bala    |   42 |
+| Daniel  |   87 |
+| Divya   |   87 |
+| John    |   13 |
+| Sam     |   95 |
+| Vignesh |   87 |
+| Sandy   |   47 |
++---------+------+
+8 rows in set (0.00 sec)
+
+mysql> select name,m3 from stu_mark where not m3 in(10,20,30,40,50,60,70,80,90,100,87);
++-------+------+
+| name  | m3   |
++-------+------+
+| Arun  |   68 |
+| Bala  |   42 |
+| John  |   13 |
+| Sam   |   95 |
+| Sandy |   47 |
++-------+------+
+5 rows in set (0.00 sec)
+
+mysql> select * from prod_det where price in (100000,200000,60000,35000,45000)
+    -> ;
++------+-----------+-----------+
+| pid  | pname     | price     |
++------+-----------+-----------+
+| s22  | samsung22 | 100000.00 |
+| s23  | samsung23 | 200000.00 |
++------+-----------+-----------+
+2 rows in set (0.03 sec)
+
+mysql> select * from prod_det where not price in (100000,200000,60000,35000,45000)
+    -> ;
++------+------------+-----------+
+| pid  | pname      | price     |
++------+------------+-----------+
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
+| s24  | samsungPro | 150000.00 |
+| op   | oneplus    |  52000.00 |
+| rm1  | realme1    |  25000.99 |
+| rm2  | realme21   |  27999.99 |
+| ng21 | nokiag21   |  18500.00 |
+| nk11 | nokia1100  |   2500.00 |
+| rd   | redme1     |  12500.99 |
+| rd2  | redme2     |  17999.99 |
++------+------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select * from prod_det where price between 70000 and 100000;
++------+-----------+-----------+
+| pid  | pname     | price     |
++------+-----------+-----------+
+| s22  | samsung22 | 100000.00 |
+| i14  | iphone14  |  80000.99 |
+| i15  | iphone15  |  70999.99 |
++------+-----------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| demo              |
+| prod_det          |
+| stu_mark          |
+| student_det       |
++-------------------+
+4 rows in set (0.03 sec)
+
+mysql> select * from student_det;
+Empty set (0.15 sec)
+
+mysql> desc student_det;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| studid       | int         | YES  |     | NULL    |       |
+| name         | varchar(20) | YES  |     | NULL    |       |
+| mobilenumber | int         | YES  |     | NULL    |       |
+| emailid      | varchar(30) | YES  |     | NULL    |       |
+| doj          | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+5 rows in set (0.06 sec)
+
+mysql> insert into student_det values(001,'Arun',250015,'arun@gmail.com','2023-07-10'),(002,'Rajesh','raj@gmail.com','2023-08-15');
+ERROR 1136 (21S01): Column count doesn't match value count at row 2
+mysql> insert into student_det values(001,'Arun',250015,'arun@gmail.com','2023-07-10'),(002,'Rajesh',278950'raj@gmail.com','2023-08-15');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''raj@gmail.com','2023-08-15')' at line 1
+mysql> insert into student_det values(001,'Arun',250015,'arun@gmail.com','2023-07-10'),(002,'Rajesh',278950,'raj@gmail.com','2023-08-15');
+Query OK, 2 rows affected (0.10 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into student_det values(003,'mani',251258,'mani@gmail.com','2023-07-25'),(002,'sekar',278025,'ss@gmail.com','2023-11-15');
+Query OK, 2 rows affected (0.08 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into student_det values(0125,'Pradeesh',321258,'pr@gmail.com','2023-11-25'),(012,'prakash',278025,'pk@gmail.com','2023-10-02');
+Query OK, 2 rows affected (0.08 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student_det where doj between '2023-08-01' and '2023-10-30';
++--------+---------+--------------+---------------+------------+
+| studid | name    | mobilenumber | emailid       | doj        |
++--------+---------+--------------+---------------+------------+
+|      2 | Rajesh  |       278950 | raj@gmail.com | 2023-08-15 |
+|     12 | prakash |       278025 | pk@gmail.com  | 2023-10-02 |
++--------+---------+--------------+---------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student_det where doj not between '2023-08-01' and '2023-10-30';
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
++--------+----------+--------------+----------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student_det where name between 'rajesh' and 'pradeesh';
+Empty set (0.00 sec)
+
+mysql> select * from student_det where name in ('Rajesh','mani','suresh','ravi') and doj between '2023-01-01' and '2023-07-31';
++--------+------+--------------+----------------+------------+
+| studid | name | mobilenumber | emailid        | doj        |
++--------+------+--------------+----------------+------------+
+|      3 | mani |       251258 | mani@gmail.com | 2023-07-25 |
++--------+------+--------------+----------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student_det order by studid;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.03 sec)
+
+mysql> select * from student_det order by studid desc;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student_det order by name;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.03 sec)
+
+mysql> select * from student_det order by name desc;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student_det order by doj;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student_det order by doj desc;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student_det;
++--------+----------+--------------+----------------+------------+
+| studid | name     | mobilenumber | emailid        | doj        |
++--------+----------+--------------+----------------+------------+
+|      1 | Arun     |       250015 | arun@gmail.com | 2023-07-10 |
+|      2 | Rajesh   |       278950 | raj@gmail.com  | 2023-08-15 |
+|      3 | mani     |       251258 | mani@gmail.com | 2023-07-25 |
+|      2 | sekar    |       278025 | ss@gmail.com   | 2023-11-15 |
+|    125 | Pradeesh |       321258 | pr@gmail.com   | 2023-11-25 |
+|     12 | prakash  |       278025 | pk@gmail.com   | 2023-10-02 |
++--------+----------+--------------+----------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select distinct studid,name from student_det;
++--------+----------+
+| studid | name     |
++--------+----------+
+|      1 | Arun     |
+|      2 | Rajesh   |
+|      3 | mani     |
+|      2 | sekar    |
+|    125 | Pradeesh |
+|     12 | prakash  |
++--------+----------+
+6 rows in set (0.04 sec)
+
+mysql> select distinct studid from student_det;
++--------+
+| studid |
++--------+
+|      1 |
+|      2 |
+|      3 |
+|    125 |
+|     12 |
++--------+
+5 rows in set (0.04 sec)
+
+mysql> select * from stud_mark;
+ERROR 1146 (42S02): Table 'batch20.stud_mark' doesn't exist
+mysql> select * from student_mark;
+ERROR 1146 (42S02): Table 'batch20.student_mark' doesn't exist
+mysql> show tables;
++-------------------+
+| Tables_in_batch20 |
++-------------------+
+| demo              |
+| prod_det          |
+| stu_mark          |
+| student_det       |
++-------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from stu_mark;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    102 | Bala    |   25 |   40 |   42 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> select distinct m3 from stu_mark;
++------+
+| m3   |
++------+
+|   68 |
+|   42 |
+|   87 |
+|   13 |
+|   95 |
+|   47 |
++------+
+6 rows in set (0.00 sec)
+
+mysql> select * from stu_mark;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    102 | Bala    |   25 |   40 |   42 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> select count(rollno) from stu_mark;
++---------------+
+| count(rollno) |
++---------------+
+|             8 |
++---------------+
+1 row in set (0.07 sec)
+
+mysql> select min(m2) from stu_mark;
++---------+
+| min(m2) |
++---------+
+|      12 |
++---------+
+1 row in set (0.05 sec)
+
+mysql> select max(m2) from stu_mark;
++---------+
+| max(m2) |
++---------+
+|      90 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select sum(m2) from stu_mark;
++---------+
+| sum(m2) |
++---------+
+|     501 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select avg(m2) from stu_mark;
++---------+
+| avg(m2) |
++---------+
+| 62.6250 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> select * from stu_mark;
++--------+---------+------+------+------+
+| rollno | name    | m1   | m2   | m3   |
++--------+---------+------+------+------+
+|    101 | Arun    |   60 |   65 |   68 |
+|    102 | Bala    |   25 |   40 |   42 |
+|    103 | Daniel  |   70 |   75 |   87 |
+|    104 | Divya   |   87 |   90 |   87 |
+|    106 | John    |    6 |   12 |   13 |
+|    108 | Sam     |   98 |   90 |   95 |
+|    109 | Vignesh |   78 |   79 |   87 |
+|    121 | Sandy   |   67 |   50 |   47 |
++--------+---------+------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> select m1+m2+m3 as Total_Mark from stu_mark;
++------------+
+| Total_Mark |
++------------+
+|        193 |
+|        107 |
+|        232 |
+|        264 |
+|         31 |
+|        283 |
+|        244 |
+|        164 |
++------------+
+8 rows in set (0.04 sec)
+
+mysql> select m1+m2+m3 as Total_Mark, (m1+m2+m3)/3 as Average from stu_mark;
++------------+---------+
+| Total_Mark | Average |
++------------+---------+
+|        193 | 64.3333 |
+|        107 | 35.6667 |
+|        232 | 77.3333 |
+|        264 | 88.0000 |
+|         31 | 10.3333 |
+|        283 | 94.3333 |
+|        244 | 81.3333 |
+|        164 | 54.6667 |
++------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select *, m1+m2+m3 as Total_Mark, (m1+m2+m3)/3 as Average from stu_mark;
++--------+---------+------+------+------+------------+---------+
+| rollno | name    | m1   | m2   | m3   | Total_Mark | Average |
++--------+---------+------+------+------+------------+---------+
+|    101 | Arun    |   60 |   65 |   68 |        193 | 64.3333 |
+|    102 | Bala    |   25 |   40 |   42 |        107 | 35.6667 |
+|    103 | Daniel  |   70 |   75 |   87 |        232 | 77.3333 |
+|    104 | Divya   |   87 |   90 |   87 |        264 | 88.0000 |
+|    106 | John    |    6 |   12 |   13 |         31 | 10.3333 |
+|    108 | Sam     |   98 |   90 |   95 |        283 | 94.3333 |
+|    109 | Vignesh |   78 |   79 |   87 |        244 | 81.3333 |
+|    121 | Sandy   |   67 |   50 |   47 |        164 | 54.6667 |
++--------+---------+------+------+------+------------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from prod_det;
++------+------------+-----------+
+| pid  | pname      | price     |
++------+------------+-----------+
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
+| s24  | samsungPro | 150000.00 |
+| op   | oneplus    |  52000.00 |
+| rm1  | realme1    |  25000.99 |
+| rm2  | realme21   |  27999.99 |
+| ng21 | nokiag21   |  18500.00 |
+| nk11 | nokia1100  |   2500.00 |
+| rd   | redme1     |  12500.99 |
+| rd2  | redme2     |  17999.99 |
++------+------------+-----------+
+12 rows in set (0.00 sec)
+
+mysql>  insert into prod_det values('s22','samsung22',100000.00),('s23','samsung23',200000.00),('i14','iphone14',80000.99),('i15','iphone15',70999.99);
+Query OK, 4 rows affected (0.23 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql>  insert into prod_det values('s22','samsung22',100000.00),('s23','samsung23',200000.00),('i14','iphone14',80000.99),('i15','iphone15',70999.99);
+Query OK, 4 rows affected (0.07 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod_det;
++------+------------+-----------+
+| pid  | pname      | price     |
++------+------------+-----------+
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
+| s24  | samsungPro | 150000.00 |
+| op   | oneplus    |  52000.00 |
+| rm1  | realme1    |  25000.99 |
+| rm2  | realme21   |  27999.99 |
+| ng21 | nokiag21   |  18500.00 |
+| nk11 | nokia1100  |   2500.00 |
+| rd   | redme1     |  12500.99 |
+| rd2  | redme2     |  17999.99 |
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
+| s22  | samsung22  | 100000.00 |
+| s23  | samsung23  | 200000.00 |
+| i14  | iphone14   |  80000.99 |
+| i15  | iphone15   |  70999.99 |
++------+------------+-----------+
+20 rows in set (0.00 sec)
+
+mysql> alter table prod_det add brand varchar(20) after pname;
+Query OK, 0 rows affected (0.50 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from prod_det;
++------+------------+-------+-----------+
+| pid  | pname      | brand | price     |
++------+------------+-------+-----------+
+| s22  | samsung22  | NULL  | 100000.00 |
+| s23  | samsung23  | NULL  | 200000.00 |
+| i14  | iphone14   | NULL  |  80000.99 |
+| i15  | iphone15   | NULL  |  70999.99 |
+| s24  | samsungPro | NULL  | 150000.00 |
+| op   | oneplus    | NULL  |  52000.00 |
+| rm1  | realme1    | NULL  |  25000.99 |
+| rm2  | realme21   | NULL  |  27999.99 |
+| ng21 | nokiag21   | NULL  |  18500.00 |
+| nk11 | nokia1100  | NULL  |   2500.00 |
+| rd   | redme1     | NULL  |  12500.99 |
+| rd2  | redme2     | NULL  |  17999.99 |
+| s22  | samsung22  | NULL  | 100000.00 |
+| s23  | samsung23  | NULL  | 200000.00 |
+| i14  | iphone14   | NULL  |  80000.99 |
+| i15  | iphone15   | NULL  |  70999.99 |
+| s22  | samsung22  | NULL  | 100000.00 |
+| s23  | samsung23  | NULL  | 200000.00 |
+| i14  | iphone14   | NULL  |  80000.99 |
+| i15  | iphone15   | NULL  |  70999.99 |
++------+------------+-------+-----------+
+20 rows in set (0.00 sec)
+
+mysql> update prod_det set brand ='Samsung' where pname like 's%';
+Query OK, 7 rows affected (0.05 sec)
+Rows matched: 7  Changed: 7  Warnings: 0
+
+mysql> select * from prod_det;
++------+------------+---------+-----------+
+| pid  | pname      | brand   | price     |
++------+------------+---------+-----------+
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | NULL    |  80000.99 |
+| i15  | iphone15   | NULL    |  70999.99 |
+| s24  | samsungPro | Samsung | 150000.00 |
+| op   | oneplus    | NULL    |  52000.00 |
+| rm1  | realme1    | NULL    |  25000.99 |
+| rm2  | realme21   | NULL    |  27999.99 |
+| ng21 | nokiag21   | NULL    |  18500.00 |
+| nk11 | nokia1100  | NULL    |   2500.00 |
+| rd   | redme1     | NULL    |  12500.99 |
+| rd2  | redme2     | NULL    |  17999.99 |
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | NULL    |  80000.99 |
+| i15  | iphone15   | NULL    |  70999.99 |
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | NULL    |  80000.99 |
+| i15  | iphone15   | NULL    |  70999.99 |
++------+------------+---------+-----------+
+20 rows in set (0.00 sec)
+
+mysql> update prod_det set brand ='apple' where pname like 'i%';
+Query OK, 6 rows affected (0.07 sec)
+Rows matched: 6  Changed: 6  Warnings: 0
+
+mysql> update prod_det set brand ='nokia' where pname like 'n%';
+Query OK, 2 rows affected (0.55 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> update prod_det set brand ='MI' where pname like 'r%';
+Query OK, 4 rows affected (0.04 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> update prod_det set brand ='oppo' where pname like 'o%';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from prod_det;
++------+------------+---------+-----------+
+| pid  | pname      | brand   | price     |
++------+------------+---------+-----------+
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | apple   |  80000.99 |
+| i15  | iphone15   | apple   |  70999.99 |
+| s24  | samsungPro | Samsung | 150000.00 |
+| op   | oneplus    | oppo    |  52000.00 |
+| rm1  | realme1    | MI      |  25000.99 |
+| rm2  | realme21   | MI      |  27999.99 |
+| ng21 | nokiag21   | nokia   |  18500.00 |
+| nk11 | nokia1100  | nokia   |   2500.00 |
+| rd   | redme1     | MI      |  12500.99 |
+| rd2  | redme2     | MI      |  17999.99 |
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | apple   |  80000.99 |
+| i15  | iphone15   | apple   |  70999.99 |
+| s22  | samsung22  | Samsung | 100000.00 |
+| s23  | samsung23  | Samsung | 200000.00 |
+| i14  | iphone14   | apple   |  80000.99 |
+| i15  | iphone15   | apple   |  70999.99 |
++------+------------+---------+-----------+
+20 rows in set (0.00 sec)
+
+mysql> select brand,count(price) from prod_det group by brand;
++---------+--------------+
+| brand   | count(price) |
++---------+--------------+
+| Samsung |            7 |
+| apple   |            6 |
+| oppo    |            1 |
+| MI      |            4 |
+| nokia   |            2 |
++---------+--------------+
+5 rows in set (0.04 sec)
+
+mysql> select brand,min(price) from prod_det group by brand;
++---------+------------+
+| brand   | min(price) |
++---------+------------+
+| Samsung |  100000.00 |
+| apple   |   70999.99 |
+| oppo    |   52000.00 |
+| MI      |   12500.99 |
+| nokia   |    2500.00 |
++---------+------------+
+5 rows in set (0.05 sec)
+
+mysql> select brand,max(price) from prod_det group by brand;
++---------+------------+
+| brand   | max(price) |
++---------+------------+
+| Samsung |  200000.00 |
+| apple   |   80000.99 |
+| oppo    |   52000.00 |
+| MI      |   27999.99 |
+| nokia   |   18500.00 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select brand,sum(price) from prod_det group by brand;
++---------+------------+
+| brand   | sum(price) |
++---------+------------+
+| Samsung | 1050000.00 |
+| apple   |  453002.94 |
+| oppo    |   52000.00 |
+| MI      |   83501.96 |
+| nokia   |   21000.00 |
++---------+------------+
+5 rows in set (0.05 sec)
+
+mysql> select brand,avg(price) from prod_det group by brand;
++---------+---------------+
+| brand   | avg(price)    |
++---------+---------------+
+| Samsung | 150000.000000 |
+| apple   |  75500.490000 |
+| oppo    |  52000.000000 |
+| MI      |  20875.490000 |
+| nokia   |  10500.000000 |
++---------+---------------+
+5 rows in set (0.03 sec)
+
+mysql> select brand,count(price) from prod_det group by brand having count(price)>5;
++---------+--------------+
+| brand   | count(price) |
++---------+--------------+
+| Samsung |            7 |
+| apple   |            6 |
++---------+--------------+
+2 rows in set (0.03 sec)
+
+mysql> select brand,min(price) from prod_det group by brand having min(price)<30000;
++-------+------------+
+| brand | min(price) |
++-------+------------+
+| MI    |   12500.99 |
+| nokia |    2500.00 |
++-------+------------+
+2 rows in set (0.00 sec)
+
+mysql> Terminal close -- exit!
